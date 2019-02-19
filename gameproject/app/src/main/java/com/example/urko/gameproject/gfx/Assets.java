@@ -45,25 +45,25 @@ public class Assets {
         masterSword_right = new Bitmap[3];
         masterSword_down = new Bitmap[3];
 
-        player_down[0] = sheet2.crop(0, 0, width, height + 16);
-        player_down[1] = sheet2.crop(width, 0, width, height + 16);
-        player_down[2] = sheet2.crop(width * 2, 0, width, height + 16);
-        player_down[3] = sheet2.crop(width * 3, 0, width, height + 16);
+        player_down[0] = sheet2.crop(0, 0, width, height + height/2);
+        player_down[1] = sheet2.crop(width, 0, width, height + height/2);
+        player_down[2] = sheet2.crop(width * 2, 0, width, height + height/2);
+        player_down[3] = sheet2.crop(width * 3, 0, width, height + height/2);
 
-        player_left[0] = sheet2.crop(0, (height + 16), width, height + 16);
-        player_left[1] = sheet2.crop(width, (height + 16), width, height + 16);
-        player_left[2] = sheet2.crop(width * 2, (height + 16), width, height + 16);
-        player_left[3] = sheet2.crop(width * 3, (height + 16), width, height + 16);
+        player_left[0] = sheet2.crop(0, (height + height/2), width, height + height/2);
+        player_left[1] = sheet2.crop(width, (height + height/2), width, height + height/2);
+        player_left[2] = sheet2.crop(width * 2, (height + height/2), width, height + height/2);
+        player_left[3] = sheet2.crop(width * 3, (height + height/2), width, height + height/2);
 
-        player_right[0] = sheet2.crop(0, (height + 16) * 2, width, height + 16);
-        player_right[1] = sheet2.crop(width, (height + 16) * 2, width, height + 16);
-        player_right[2] = sheet2.crop(width * 2, (height + 16) * 2, width, height + 16);
-        player_right[3] = sheet2.crop(width * 3, (height + 16) * 2, width, height + 16);
+        player_right[0] = sheet2.crop(0, (height + height/2) * 2, width, height + height/2);
+        player_right[1] = sheet2.crop(width, (height + height/2) * 2, width, height + height/2);
+        player_right[2] = sheet2.crop(width * 2, (height + height/2) * 2, width, height + height/2);
+        player_right[3] = sheet2.crop(width * 3, (height + height/2) * 2, width, height + height/2);
 
-        player_up[0] = sheet2.crop(0, (height + 16) * 3, width, height + 16);
-        player_up[1] = sheet2.crop(width, (height + 16) * 3, width, height + 16);
-        player_up[2] = sheet2.crop(width * 2, (height + 16) * 3, width, height + 16);
-        player_up[3] = sheet2.crop(width * 3, (height + 16) * 3, width, height + 16);
+        player_up[0] = sheet2.crop(0, (height + height/2) * 3, width, height + height/2);
+        player_up[1] = sheet2.crop(width, (height + height/2) * 3, width, height + height/2);
+        player_up[2] = sheet2.crop(width * 2, (height + height/2) * 3, width, height + height/2);
+        player_up[3] = sheet2.crop(width * 3, (height + height/2) * 3, width, height + height/2);
 
 
        /* pokeball = sheetball.crop(0, 0, width, height);

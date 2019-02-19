@@ -3,15 +3,20 @@ package com.example.urko.gameproject;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Point;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.example.urko.gameproject.Worlds.World;
 import com.example.urko.gameproject.gfx.Assets;
 import com.example.urko.gameproject.gfx.GameCamera;
+import com.example.urko.gameproject.input.Input;
 
 import java.io.File;
 import java.io.IOException;
@@ -23,11 +28,12 @@ public class MainActivity extends Activity implements Runnable{
     private Handler handler;
     private GameCamera gameCamera;
     private World world;
-private Canvas canvas;
-private Bitmap bitmap;
+    private Input input;
+private Canvas canvas, canvas2;
+private Bitmap bitmap, bitmap2;
 private boolean running=false;
 private Thread thread;
-private ImageView imageView;
+private ImageView imageView,imageView2, control;
 private int width, height, tileWidth, tileHeight;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,15 +60,43 @@ private int width, height, tileWidth, tileHeight;
     }
     public void init(){
         Log.d("mytag","init");
-        handler= new Handler(this);
+
         gameCamera= new GameCamera(handler,0,0);
+        input= new Input();
+        handler= new Handler(this);
+
+        control = (ImageView) findViewById(R.id.move);
         imageView=(ImageView) findViewById(R.id.myimageview);
+        imageView2=(ImageView) findViewById(R.id.myimageview2);
         bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         imageView.setImageBitmap(bitmap);
+        bitmap2 = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        imageView2.setImageBitmap(bitmap2);
         canvas = new Canvas(bitmap);
+        canvas2 = new Canvas(bitmap2);
         Assets.init(getResources(), width, height);
 
         world = new World(handler, world1,this,tileWidth,tileHeight);
+        control.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN: {
+                        getInput().setDown(true);
+                        Log.d("mytag","move down");
+                        break;
+                    }
+                    case MotionEvent.ACTION_UP: {
+                        handler.getInput().setDown(false);
+                        Log.d("mytag","move up");
+                        break;
+                    }
+                }
+
+                return false;
+            }
+        });
+
         start();
     }
 
@@ -71,7 +105,7 @@ private int width, height, tileWidth, tileHeight;
             tick();
             render();
             try {
-                Thread.sleep(20);
+                Thread.sleep(1000/30);
             }
             catch(InterruptedException e)
             {
@@ -82,10 +116,12 @@ private int width, height, tileWidth, tileHeight;
         stop();
     }
     public void tick(){
+        input.tick();
         world.tick();
+        if(getInput().down)
+        Log.d("mytag","es true");
     }
     public void render(){
-        Log.d("mytag","render");
         //canvas.drawColor(Color.BLACK);
        /* Bitmap grass = Bitmap.createScaledBitmap(Assets.grass, tileWidth, tileHeight, true);
         canvas.drawBitmap(grass, 0, 0, null);
@@ -93,7 +129,13 @@ private int width, height, tileWidth, tileHeight;
         canvas.drawBitmap(dirt, tileWidth*2, 0, null);
         Bitmap stone = Bitmap.createScaledBitmap(Assets.stone, tileWidth, tileHeight, true);
         canvas.drawBitmap(stone, tileWidth*4, 0, null);*/
-        world.render(canvas);
+
+        canvas.drawColor(Color.TRANSPARENT,PorterDuff.Mode.CLEAR);
+        canvas2.drawColor(Color.TRANSPARENT,PorterDuff.Mode.CLEAR);
+        world.render(canvas,canvas2);
+        imageView.invalidate(0,0,width,height);
+        imageView2.invalidate(0,0,width,height);
+
     }
     public synchronized void start(){
         Log.d("mytag","start");
@@ -114,6 +156,7 @@ private int width, height, tileWidth, tileHeight;
             e.printStackTrace();
         }
     }
+
 
 
     public int getWidth() {
@@ -139,7 +182,9 @@ private int width, height, tileWidth, tileHeight;
     public int getTileHeight() {
         return tileHeight;
     }
-
+    public Input getInput(){
+        return input;
+    }
 
 
 }

@@ -2,14 +2,16 @@ package com.example.urko.gameproject.Entities.Creatures;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.util.Log;
 
 import com.example.urko.gameproject.Handler;
+import com.example.urko.gameproject.gfx.Animation;
 import com.example.urko.gameproject.gfx.Assets;
 
 public class Player extends Creature{
 
 
-    //private Animation animDown, animLeft, animRight, animUp, lastAnimation;
+    private Animation animDown, animLeft, animRight, animUp, lastAnimation;
     private static int width = 32, height = 48;
     private long lastAttackTimer, attackCooldown = 800, attackTimer = attackCooldown;
     //private Sword sword;
@@ -25,11 +27,11 @@ public class Player extends Creature{
         health=1;
         this.tileHeight=tileHeight;
         this.tileWidth=tileWidth;
-        /*animDown = new Animation(200, Assets.player_down);
+        animDown = new Animation(200, Assets.player_down);
         animLeft = new Animation(200, Assets.player_left);
         animRight = new Animation(200, Assets.player_right);
         animUp = new Animation(200, Assets.player_up);
-        lastAnimation = animDown;*/
+        lastAnimation = animDown;
     }
 
     @Override
@@ -38,8 +40,10 @@ public class Player extends Creature{
         animLeft.tick();
         animRight.tick();
         animUp.tick();*/
+        Log.d("mytag","entra player tick");
+
         getInput();
-        if(movement)
+        //if(movement)
             move();
         handler.getGameCamera().centerOnEntity(this);
         //checkAttacks();
@@ -105,20 +109,24 @@ public class Player extends Creature{
         movement=true;
     }
     private void getInput() {
+        Log.d("mytag","entra getInput");
+
         xMove = 0;
         yMove = 0;
-        /*if (handler.getKeyManager().up) {
+        if (handler.getInput().up) {
             yMove = -speed;
         }
-        if (handler.getKeyManager().down) {
+        if (handler.getInput().down) {
             yMove = speed;
+            Log.d("mytag","entra yMove=speed, "+yMove);
+
         }
-        if (handler.getKeyManager().left) {
+        if (handler.getInput().left) {
             xMove = -speed;
         }
-        if (handler.getKeyManager().right) {
+        if (handler.getInput().right) {
             xMove = speed;
-        }*/
+        }
 
 		/*if (handler.getMouseManager().isLeftPressed()) {
 			System.out.println("pulsa");
@@ -222,7 +230,7 @@ public class Player extends Creature{
 
     @Override
     public void render(Canvas g) {
-        g.drawBitmap(Assets.player.createScaledBitmap(Assets.player, tileWidth, tileHeight+tileHeight/2, false), x, y-tileHeight/2, null);
+        g.drawBitmap(getCurrentAnimationFrame().createScaledBitmap(Assets.player, tileWidth, tileHeight+tileHeight/2, false), x, y-tileHeight/2, null);
        // g.drawBitmap(Assets.player, (int) (x - handler.getGameCamera().getxOffset()),
                // (int) (y - handler.getGameCamera().getyOffset()));
 
@@ -232,7 +240,7 @@ public class Player extends Creature{
 		 bounds.height);*/
     }
 
-    /*private BufferedImage getCurrentAnimationFrame() {
+    private Bitmap getCurrentAnimationFrame() {
         if (xMove < 0) {
             lastAnimation = animLeft;
             return animLeft.getCurrentFrame();
@@ -248,9 +256,9 @@ public class Player extends Creature{
         } else {
             return getLastFrame(lastAnimation);
         }
-    }*/
+    }
 
-    /*private BufferedImage getLastFrame(Animation lastAnimation) {
+    private Bitmap getLastFrame(Animation lastAnimation) {
         return lastAnimation.getLastFrame();
-    }*/
+    }
 }

@@ -2,6 +2,7 @@ package com.example.urko.gameproject;
 
 import com.example.urko.gameproject.Worlds.World;
 import com.example.urko.gameproject.gfx.GameCamera;
+import com.example.urko.gameproject.input.Input;
 
 public class Handler {
     private MainActivity game;
@@ -24,7 +25,6 @@ public class Handler {
     }
 
 
-
     public MainActivity getGame() {
         return game;
     }
@@ -37,5 +37,7 @@ public class Handler {
     public void setWorld(World world) {
         this.world = world;
     }
-
+    public Input getInput(){
+        return game.getInput();
+    }
 }

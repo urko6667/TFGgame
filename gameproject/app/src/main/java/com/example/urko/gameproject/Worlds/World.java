@@ -68,21 +68,23 @@ public class World {
             puntostring=Integer.toString(puntosint);
         }
     }
-    public void render(Canvas g) {
+    public void render(Canvas g,Canvas g2) {
         int xStart =(int) Math.max(0, handler.getGameCamera().getxOffset() / handler.getGame().getTileWidth());
         int xEnd = (int) Math.min(width, (handler.getGameCamera().getxOffset() + handler.getWidth()) / handler.getGame().getTileWidth() + 1);
         int yStart =(int) Math.max(0, handler.getGameCamera().getyOffset() / handler.getGame().getTileHeight());
         int yEnd =(int) Math.min(height, (handler.getGameCamera().getyOffset() + handler.getHeight()) / handler.getGame().getTileHeight() + 1);
-        entityManager.render(g);
-        for(int y = yStart;y < yEnd;y++){
-            for(int x = xStart;x < xEnd;x++){
+        //entityManager.render(g);
+        do {
+            for (int y = yStart; y < yEnd; y++) {
+                for (int x = xStart; x < xEnd; x++) {
 
 
-                getTile(x, y).render(g, (int) (x * handler.getGame().getTileWidth() - handler.getGameCamera().getxOffset()),
-                        (int) (y * handler.getGame().getTileHeight() - handler.getGameCamera().getyOffset()),tileWidth,tileHeight);
+                    getTile(x, y).render(g, (int) (x * handler.getGame().getTileWidth() - handler.getGameCamera().getxOffset()),
+                            (int) (y * handler.getGame().getTileHeight() - handler.getGameCamera().getyOffset()), tileWidth, tileHeight);
+                }
             }
-        }
-        entityManager.render(g);
+        }while(gameover);
+        entityManager.render(g2);
         int fontSize = 30;
 /*
         g.setFont(new Font("TimesRoman", Font.PLAIN, fontSize));

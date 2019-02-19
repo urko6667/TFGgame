@@ -1,5 +1,7 @@
 package com.example.urko.gameproject.Entities.Creatures;
 
+import android.util.Log;
+
 import com.example.urko.gameproject.Entities.Entity;
 import com.example.urko.gameproject.Handler;
 
@@ -21,9 +23,9 @@ public abstract class Creature extends Entity {
     }
 
     public void move() {
-        if (!checkEntityCollisions(xMove, 0f))
+        //if (!checkEntityCollisions(xMove, 0f))
             moveX();
-        if (!checkEntityCollisions(0, yMove))
+        //if (!checkEntityCollisions(0, yMove))
             moveY();
 
     }
@@ -55,17 +57,22 @@ public abstract class Creature extends Entity {
         }
     }
     public void moveY(){
-        if(yMove < 0){//Up
+        Log.d("mytag","entra moveY, yMove=" + yMove);
+        if(yMove > 0){//Up
             /*int ty = (int) (y + yMove + bounds.y) / Tile.TILEHEIGHT;
 
             if(!collisionWithTile((int) (x + bounds.x) / Tile.TILEWIDTH, ty) &&
                     !collisionWithTile((int) (x + bounds.x + bounds.width) / Tile.TILEWIDTH, ty)){*/
-                y += yMove;
+            Log.d("mytag","entra moveY2, y="+y);
+
+            y += yMove;
+            Log.d("mytag","entra moveY3, y="+y);
+
            /* }else{
                 y = ty * Tile.TILEHEIGHT + Tile.TILEHEIGHT - bounds.y;
             }*/
 
-        }else if(yMove > 0){//Down
+        }else if(yMove < 0){//Down
            /* int ty = (int) (y + yMove + bounds.y + bounds.height) / Tile.TILEHEIGHT;
 
             if(!collisionWithTile((int) (x + bounds.x) / Tile.TILEWIDTH, ty) &&
