@@ -175,6 +175,7 @@ private int width, height, tileWidth, tileHeight;
     public GameCamera getGameCamera() {
         return gameCamera;
     }
+
     public int getTileWidth() {
         return tileWidth;
     }

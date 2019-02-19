@@ -18,7 +18,7 @@ public class Player extends Creature{
     private int orientation=1;
     private boolean movement=true;
     private int tileWidth, tileHeight;
-    public Player(Handler handler, float x, float y,int tileWidth, int tileHeight) {
+    public Player(Handler handler, float x, float y, int tileWidth, int tileHeight) {
         super(handler, x, y, Creature.DEFAULT_WIDTH, Creature.DEFAULT_HEIGHT);
        /* bounds.x = 5;
         bounds.y = 24;

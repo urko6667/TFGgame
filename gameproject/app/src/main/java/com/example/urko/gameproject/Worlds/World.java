@@ -36,7 +36,7 @@ public class World {
         entityManager.getPlayer().setY(tileHeight);
         //entityManager.addEntity(new Pokeball(handler,handler.getGame().getTileWidth()*2,handler.getGame().getTileHeight()*3));
        // entityManager.addEntity(new Pokeball(handler,handler.getGame().getTileWidth()*3,handler.getGame().getTileHeight()*2));
-        entityManager.addEntity(new Pokemon(handler,handler.getGame().getTileWidth()*5,handler.getGame().getTileHeight()*5));
+        entityManager.addEntity(new Pokemon(handler,25,25,tileWidth,tileHeight));
 
     }
     public EntityManager getEntityManager() {
@@ -49,10 +49,10 @@ public class World {
             float py=(float) Math.random();
             px=(float) Math.ceil(px*40*handler.getGame().getTileWidth());
             py=(float) Math.ceil(py*40*handler.getGame().getTileHeight());
-            /*if(!getTile((int)px,(int) py).isSolid()) {
-                entityManager.addEntity(new Pokemon(handler,px,py));
+            if(!getTile((int)px,(int) py).isSolid()) {
+                entityManager.addEntity(new Pokemon(handler,px,py,tileWidth,tileHeight));
                 i++;
-            }*/
+            }
         }
     }
     public void tick() {

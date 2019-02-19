@@ -10,8 +10,9 @@ import com.example.urko.gameproject.gfx.Assets;
 public class Pokemon extends Creature{
 
     private long lastMoveTimer, moveCooldown = 400, moveTimer = moveCooldown;
-    private Bitmap pokemonimg = Assets.pokemon[0];
-    public Pokemon(Handler handler, float x, float y) {
+    private Bitmap pokemonimg = Assets.pokemon;
+    private int tileWidth, tileHeight;
+    public Pokemon(Handler handler, float x, float y, int tileWidth, int tileHeight) {
         super(handler, x, y, Creature.DEFAULT_WIDTH, Creature.DEFAULT_HEIGHT);
        /* bounds.x = 1;
         bounds.y = 1;
@@ -20,6 +21,9 @@ public class Pokemon extends Creature{
         health=1;
         this.x=x-handler.getGameCamera().getyOffset();
         this.y=y-handler.getGameCamera().getyOffset();
+
+        this.tileHeight=tileHeight;
+        this.tileWidth=tileWidth;
 
     }
 
@@ -38,7 +42,7 @@ public class Pokemon extends Creature{
         float dir = (float) Math.random();
         dir=dir*4;
         Math.ceil(dir);
-        switch((int)dir) {
+        /*switch((int)dir) {
             case 1:
                 xMove=32;
                 pokemonimg = Assets.pokemon[2];
@@ -59,7 +63,7 @@ public class Pokemon extends Creature{
                 pokemonimg = Assets.pokemon[3];
                 moveY();
                 break;
-        }
+        }*/
 
         moveTimer=0;
 
@@ -145,6 +149,9 @@ public class Pokemon extends Creature{
     @Override
     public void render(Canvas g) {
         // TODO Auto-generated method stub
+
+        g.drawBitmap(Assets.pokemon.createScaledBitmap(Assets.pokemon, tileWidth, tileHeight, false), x, y, null);
+
         //g.drawBitmap(pokemonimg, (int) (x - handler.getGameCamera().getxOffset()),
                 //(int) (y - handler.getGameCamera().getyOffset()));
 
