@@ -1,6 +1,7 @@
 package com.example.urko.gameproject.gfx;
 
 import android.graphics.Bitmap;
+import android.util.Log;
 
 public class Animation {
     private int speed, index;
@@ -18,6 +19,7 @@ public class Animation {
         timer += System.currentTimeMillis() - lastTime;
         lastTime = System.currentTimeMillis();
         if(timer>speed) {
+
             index++;
             timer=0;
             if(index>=frames.length)
