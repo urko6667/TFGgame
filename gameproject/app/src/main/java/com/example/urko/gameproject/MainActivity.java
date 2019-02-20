@@ -35,6 +35,7 @@ private boolean running=false;
 private Thread thread;
 private ImageView imageView,imageView2, control;
 private int width, height, tileWidth, tileHeight;
+private double[][] movecontrol;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +49,26 @@ private int width, height, tileWidth, tileHeight;
 // status bar is hidden, so hide that too if necessary.
         //ActionBar actionBar = getActionBar();
        // actionBar.hide();
+        movecontrol = new double[4][4];
+        movecontrol[0][0]=34.5;
+        movecontrol[0][1]=0.5;
+        movecontrol[0][2]=65;
+        movecontrol[0][3]=29.8;
+
+        movecontrol[1][0]=69.5;
+        movecontrol[1][1]=35.5;
+        movecontrol[1][2]=98.2;
+        movecontrol[1][3]=65;
+
+        movecontrol[2][0]=36.2;
+        movecontrol[2][1]=69.6;
+        movecontrol[2][2]=65;
+        movecontrol[2][3]=98.2;
+
+        movecontrol[3][0]=1.7;
+        movecontrol[3][1]=34.5;
+        movecontrol[3][2]=30.5;
+        movecontrol[3][3]=63.7;
         Display display = getWindowManager(). getDefaultDisplay();
         Point size = new Point();
         display. getSize(size);
@@ -77,23 +98,34 @@ private int width, height, tileWidth, tileHeight;
         Assets.init(getResources(), width, height);
 
         world = new World(handler, world1,this,tileWidth,tileHeight);
+
         control.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN: {
-                        getInput().setDown(true);
-                        Log.d("mytag","move down");
+                        float Tx=event.getX();
+                        float Ty=event.getY();
+                        int Cmx=control.getWidth();
+                        int Cmy=control.getHeight();
+                        if(Tx>(Cmx*(movecontrol[0][0]/100))&&Tx<(Cmx*(movecontrol[0][2]/100))&&Ty>(Cmy*(movecontrol[0][1]/100))&&Ty<(Cmy*(movecontrol[0][3]/100))){
+                            getInput().setUp();}
+                        if(Tx>(Cmx*(movecontrol[1][0]/100))&&Tx<(Cmx*(movecontrol[1][2]/100))&&Ty>(Cmy*(movecontrol[1][1]/100))&&Ty<(Cmy*(movecontrol[1][3]/100))){
+                            getInput().setRight();}
+                        if(Tx>(Cmx*(movecontrol[2][0]/100))&&Tx<(Cmx*(movecontrol[2][2]/100))&&Ty>(Cmy*(movecontrol[2][1]/100))&&Ty<(Cmy*(movecontrol[2][3]/100))){
+                            getInput().setDown();}
+                        if(Tx>(Cmx*(movecontrol[3][0]/100))&&Tx<(Cmx*(movecontrol[3][2]/100))&&Ty>(Cmy*(movecontrol[3][1]/100))&&Ty<(Cmy*(movecontrol[3][3]/100))){
+                            getInput().setLeft();}
                         break;
+
                     }
                     case MotionEvent.ACTION_UP: {
-                        handler.getInput().setDown(false);
-                        Log.d("mytag","move up");
+                        handler.getInput().setFalse();
                         break;
                     }
                 }
 
-                return false;
+                return true;
             }
         });
 
@@ -118,8 +150,6 @@ private int width, height, tileWidth, tileHeight;
     public void tick(){
         input.tick();
         world.tick();
-        if(getInput().down)
-        Log.d("mytag","es true");
     }
     public void render(){
         //canvas.drawColor(Color.BLACK);
@@ -133,6 +163,7 @@ private int width, height, tileWidth, tileHeight;
         canvas.drawColor(Color.TRANSPARENT,PorterDuff.Mode.CLEAR);
         canvas2.drawColor(Color.TRANSPARENT,PorterDuff.Mode.CLEAR);
         world.render(canvas,canvas2);
+
         imageView.invalidate(0,0,width,height);
         imageView2.invalidate(0,0,width,height);
 

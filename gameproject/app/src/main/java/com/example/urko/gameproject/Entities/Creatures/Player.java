@@ -2,6 +2,8 @@ package com.example.urko.gameproject.Entities.Creatures;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.util.Log;
 
 import com.example.urko.gameproject.Handler;
@@ -18,13 +20,16 @@ public class Player extends Creature{
     private int orientation=1;
     private boolean movement=true;
     private int tileWidth, tileHeight;
+    private Paint paint;
     public Player(Handler handler, float x, float y, int tileWidth, int tileHeight) {
         super(handler, x, y, Creature.DEFAULT_WIDTH, Creature.DEFAULT_HEIGHT);
-       /* bounds.x = 5;
+        /*bounds.x = 5;
         bounds.y = 24;
         bounds.width = 22;
         bounds.height = 18;*/
+        bounds.set(2,tileHeight/2,tileWidth-4,tileHeight+tileHeight/2);
         health=1;
+        speed=tileWidth/5;
         this.tileHeight=tileHeight;
         this.tileWidth=tileWidth;
         animDown = new Animation(200, Assets.player_down);
@@ -32,14 +37,16 @@ public class Player extends Creature{
         animRight = new Animation(200, Assets.player_right);
         animUp = new Animation(200, Assets.player_up);
         lastAnimation = animDown;
+        paint = new Paint();
+        this.paint.setColor(Color.RED);
     }
 
     @Override
     public void tick() {
-        /*animDown.tick();
+        animDown.tick();
         animLeft.tick();
         animRight.tick();
-        animUp.tick();*/
+        animUp.tick();
         Log.d("mytag","entra player tick");
 
         getInput();
@@ -115,17 +122,20 @@ public class Player extends Creature{
         yMove = 0;
         if (handler.getInput().up) {
             yMove = -speed;
+            Log.d("mytag","movement: arriba");
         }
         if (handler.getInput().down) {
             yMove = speed;
-            Log.d("mytag","entra yMove=speed, "+yMove);
+            Log.d("mytag","movement: abajo");
 
         }
         if (handler.getInput().left) {
             xMove = -speed;
+            Log.d("mytag","movement: izquierda");
         }
         if (handler.getInput().right) {
             xMove = speed;
+            Log.d("mytag","movement: derecha");
         }
 
 		/*if (handler.getMouseManager().isLeftPressed()) {
@@ -230,7 +240,8 @@ public class Player extends Creature{
 
     @Override
     public void render(Canvas g) {
-        g.drawBitmap(getCurrentAnimationFrame().createScaledBitmap(Assets.player, tileWidth, tileHeight+tileHeight/2, false), x, y-tileHeight/2, null);
+        g.drawBitmap(getCurrentAnimationFrame().createScaledBitmap(getCurrentAnimationFrame(), tileWidth, tileHeight+tileHeight/2, false), x, y-tileHeight/2, null);
+        g.drawRect(bounds,paint );
        // g.drawBitmap(Assets.player, (int) (x - handler.getGameCamera().getxOffset()),
                // (int) (y - handler.getGameCamera().getyOffset()));
 
