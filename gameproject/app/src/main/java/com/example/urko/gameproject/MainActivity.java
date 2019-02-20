@@ -35,6 +35,9 @@ private boolean running=false;
 private Thread thread;
 private ImageView imageView,imageView2, control;
 private int width, height, tileWidth, tileHeight;
+
+
+
 private double[][] movecontrol;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

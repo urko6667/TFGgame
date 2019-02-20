@@ -150,7 +150,7 @@ public class Pokemon extends Creature{
     public void render(Canvas g) {
         // TODO Auto-generated method stub
 
-        g.drawBitmap(Assets.pokemon.createScaledBitmap(Assets.pokemon, tileWidth, tileHeight, false), x, y, null);
+        g.drawBitmap(Assets.pokemon.createScaledBitmap(Assets.pokemon, tileWidth, tileHeight, false), (int) (x-handler.getGame().getGameCamera().getxOffset()), (int) (y-handler.getGame().getGameCamera().getyOffset()), null);
 
         //g.drawBitmap(pokemonimg, (int) (x - handler.getGameCamera().getxOffset()),
                 //(int) (y - handler.getGameCamera().getyOffset()));

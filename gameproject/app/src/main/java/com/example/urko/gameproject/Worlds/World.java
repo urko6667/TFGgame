@@ -36,6 +36,7 @@ public class World {
         entityManager.getPlayer().setY(tileHeight);
         //entityManager.addEntity(new Pokeball(handler,handler.getGame().getTileWidth()*2,handler.getGame().getTileHeight()*3));
        // entityManager.addEntity(new Pokeball(handler,handler.getGame().getTileWidth()*3,handler.getGame().getTileHeight()*2));
+        entityManager.addEntity(new Pokemon(handler,5*tileWidth,5*tileHeight,tileWidth,tileHeight));
         //entityManager.addEntity(new Pokemon(handler,25,25,tileWidth,tileHeight));
 
     }
@@ -69,10 +70,10 @@ public class World {
         }
     }
     public void render(Canvas g,Canvas g2) {
-        int xStart =(int) Math.max(0, handler.getGameCamera().getxOffset() / handler.getGame().getTileWidth());
-        int xEnd = (int) Math.min(width, (handler.getGameCamera().getxOffset() + handler.getWidth()) / handler.getGame().getTileWidth() + 1);
-        int yStart =(int) Math.max(0, handler.getGameCamera().getyOffset() / handler.getGame().getTileHeight());
-        int yEnd =(int) Math.min(height, (handler.getGameCamera().getyOffset() + handler.getHeight()) / handler.getGame().getTileHeight() + 1);
+        int xStart =(int) Math.max(0, handler.getGame().getGameCamera().getxOffset() / handler.getGame().getTileWidth());
+        int xEnd = (int) Math.min(width, (handler.getGame().getGameCamera().getxOffset() + handler.getWidth()) / handler.getGame().getTileWidth() + 1);
+        int yStart =(int) Math.max(0, handler.getGame().getGameCamera().getyOffset() / handler.getGame().getTileHeight());
+        int yEnd =(int) Math.min(height, (handler.getGame().getGameCamera().getyOffset() + handler.getGame().getHeight()) / handler.getGame().getTileHeight() + 1);
         //entityManager.render(g);
         do {
             for (int y = yStart; y < yEnd; y++) {
