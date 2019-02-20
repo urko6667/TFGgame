@@ -35,6 +35,9 @@ private boolean running=false;
 private Thread thread;
 private ImageView imageView,imageView2, control;
 private int width, height, tileWidth, tileHeight;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,7 +79,12 @@ private int width, height, tileWidth, tileHeight;
         canvas2 = new Canvas(bitmap2);
         Assets.init(getResources(), width, height);
 
-        world = new World(handler, world1,this,tileWidth,tileHeight);
+        gameCamera = new GameCamera(handler,0,0);
+
+
+        world = new World(handler, world1,this, tileWidth, tileHeight);
+        handler.setWorld(world);
+
         control.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
