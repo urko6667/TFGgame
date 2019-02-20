@@ -27,7 +27,7 @@ public class Player extends Creature{
         bounds.y = 24;
         bounds.width = 22;
         bounds.height = 18;*/
-        bounds.set(2,tileHeight/2,tileWidth-4,tileHeight+tileHeight/2);
+
         health=1;
         speed=tileWidth/5;
         this.tileHeight=tileHeight;
@@ -48,7 +48,7 @@ public class Player extends Creature{
         animRight.tick();
         animUp.tick();
         Log.d("mytag","entra player tick");
-
+        bounds.set((int)x+2,(int)y+tileHeight/2,(int)x+tileWidth-4,(int)y+tileHeight+tileHeight/2);
         getInput();
         //if(movement)
             move();
