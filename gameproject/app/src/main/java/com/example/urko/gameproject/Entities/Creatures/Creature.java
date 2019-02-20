@@ -34,25 +34,27 @@ public abstract class Creature extends Entity {
 
     }
     public void moveX(){
+        Log.d("mytag","x="+x+", bounds.right="+bounds.right+", bounds.width=" + bounds.width());
+        Log.d("mytag","y="+y+", bounds.top="+bounds.top+", bounds.height=" + bounds.height());
         if(xMove > 0){//Moving right
-           // int tx = (int) (x + xMove + bounds.x + bounds.width) / Tile.TILEWIDTH;
+            int tx = (int) (x + xMove + bounds.right + bounds.width()) / handler.getGame().getTileWidth();
 
-            /*if(!collisionWithTile(tx, (int) (y + bounds.y) / Tile.TILEHEIGHT) &&
-                    !collisionWithTile(tx, (int) (y + bounds.y + bounds.height) / Tile.TILEHEIGHT)){*/
+            if(!collisionWithTile(tx, (int) (y + bounds.top) / handler.getGame().getTileHeight()) &&
+                    !collisionWithTile(tx, (int) (y + bounds.top + bounds.height()) / handler.getGame().getTileHeight())){
                 x += xMove;
-          /*  }else{
-                x = tx * Tile.TILEWIDTH - bounds.x - bounds.width - 1;
-            }*/
+            }else{
+                x = tx * handler.getGame().getTileWidth() - bounds.right - bounds.width() - 1;
+            }
 
         }else if(xMove < 0){//Moving left
-           /* int tx = (int) (x + xMove + bounds.x) / Tile.TILEWIDTH;
+            int tx = (int) (x + xMove + bounds.right) / handler.getGame().getTileWidth();
 
-            if(!collisionWithTile(tx, (int) (y + bounds.y) / Tile.TILEHEIGHT) &&
-                    !collisionWithTile(tx, (int) (y + bounds.y + bounds.height) / Tile.TILEHEIGHT)){*/
+            if(!collisionWithTile(tx, (int) (y + bounds.top) / handler.getGame().getTileHeight()) &&
+                    !collisionWithTile(tx, (int) (y + bounds.top + bounds.height()) / handler.getGame().getTileHeight())){
                 x += xMove;
-           /* }else{
-                x = tx * Tile.TILEWIDTH + Tile.TILEWIDTH - bounds.x;
-            }*/
+            }else{
+                x = tx * handler.getGame().getTileWidth() + handler.getGame().getTileWidth() - bounds.right;
+            }
 
         }
     }
@@ -86,8 +88,7 @@ public abstract class Creature extends Entity {
     }
 
     protected boolean collisionWithTile(int x, int y) {
-       // return handler.getWorld().getTile(x, y).isSolid();
-        return false;
+        return handler.getWorld().getTile(x, y).isSolid();
     }
 
     // SETER & GETTER

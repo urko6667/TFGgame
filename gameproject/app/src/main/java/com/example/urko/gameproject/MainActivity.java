@@ -105,7 +105,6 @@ private double[][] movecontrol;
         canvas2 = new Canvas(bitmap2);
         Assets.init(getResources(), width, height);
 
-        world = new World(handler, world1,this,tileWidth,tileHeight);
 
         control.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -178,6 +177,8 @@ private double[][] movecontrol;
     }
     public synchronized void start(){
         Log.d("mytag","start");
+        world = new World(handler, world1, this, tileWidth, tileHeight);
+        handler.setWorld(world);
         if(running)
             return;
         running = true;

@@ -48,10 +48,11 @@ public class Player extends Creature{
         animRight.tick();
         animUp.tick();
         Log.d("mytag","entra player tick");
-        bounds.set((int)x+2,(int)y+tileHeight/2,(int)x+tileWidth-4,(int)y+tileHeight+tileHeight/2);
+
         getInput();
         //if(movement)
             move();
+        bounds.set((int)x+2,(int)y+tileHeight/2,(int)x+tileWidth-4,(int)y+tileHeight+tileHeight/2);
         handler.getGameCamera().centerOnEntity(this);
         //checkAttacks();
     }
