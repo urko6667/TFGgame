@@ -57,7 +57,8 @@ public class Player extends Creature{
         getInput();
         //if(movement)
             move();
-        bounds.set((int)x+marginLeft,(int)y+marginTop,(int)x+tileWidth-marginRight,(int)y+marginTop+tileHeight-marginBottom);
+        bounds.set((int)x+marginLeft,(int)y+marginTop,(int)x+tileWidth-marginRight,(int)y+tileHeight-marginBottom);
+        setBounds(bounds);
         handler.getGameCamera().centerOnEntity(this);
         //checkAttacks();
     }
@@ -247,7 +248,7 @@ public class Player extends Creature{
     @Override
     public void render(Canvas g) {
         g.drawBitmap(getCurrentAnimationFrame().createScaledBitmap(getCurrentAnimationFrame(), tileWidth, tileHeight+tileHeight/2, false), (int) (x-handler.getGame().getGameCamera().getxOffset()) , (int) ((y-tileHeight/2)-handler.getGame().getGameCamera().getyOffset()), null);
-        g.drawRect(bounds,paint);
+        //g.drawRect(bounds,paint);
        // g.drawBitmap(Assets.player, (int) (x - handler.getGameCamera().getxOffset()),
                // (int) (y - handler.getGameCamera().getyOffset()));
 

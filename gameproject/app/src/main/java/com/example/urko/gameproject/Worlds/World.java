@@ -48,8 +48,8 @@ public class World {
         while( i<2) {
             float px=(float) Math.random();
             float py=(float) Math.random();
-            px=(float) Math.ceil(px*40*handler.getGame().getTileWidth());
-            py=(float) Math.ceil(py*40*handler.getGame().getTileHeight());
+            px=(float) Math.ceil(px*width);
+            py=(float) Math.ceil(py*height);
             if(!getTile((int)px,(int) py).isSolid()) {
                 entityManager.addEntity(new Pokemon(handler,px,py,tileWidth,tileHeight));
                 i++;

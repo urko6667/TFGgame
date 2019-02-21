@@ -5,9 +5,13 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.constraint.solver.widgets.Rectangle;
+import android.util.Log;
 
+import com.example.urko.gameproject.Entities.Entity;
 import com.example.urko.gameproject.Handler;
 import com.example.urko.gameproject.gfx.Assets;
+
+import static android.graphics.Rect.intersects;
 
 public class Pokemon extends Creature{
 
@@ -22,10 +26,10 @@ public class Pokemon extends Creature{
         bounds.y = 1;
         bounds.width = 30;
         bounds.height = 30;*/
-        marginBottom=tileHeight/20;
+        marginBottom=tileHeight/10;
         marginLeft=tileWidth/10;
         marginRight=tileWidth/10;
-        marginTop=tileHeight/10;
+        marginTop=tileHeight/5;
         setMarginBottom(marginBottom);
         setMarginLeft(marginLeft);
         setMarginRight(marginRight);
@@ -45,7 +49,8 @@ public class Pokemon extends Creature{
     public void tick() {
         // TODO Auto-generated method stub
         RandomMove();
-        bounds.set((int)x+marginLeft,(int)y+marginTop,(int)x+tileWidth-marginRight,(int)y+marginTop+tileHeight-marginBottom);
+        bounds.set((int)x+marginLeft,(int)y+marginTop,(int)x+tileWidth-marginRight,(int)y+tileHeight-marginBottom);
+        setBounds(bounds);
     }
     public void RandomMove() {
         moveTimer += System.currentTimeMillis() - lastMoveTimer;
@@ -82,75 +87,51 @@ public class Pokemon extends Creature{
 
 
     }
-   // public void moveX() {
-       /* Rectangle cb = getCollisionBounds(xMove, 0);
+    public void moveX(){
+       // Rectangle cb = getCollisionBounds(xMove, 0);
         for (Entity e : handler.getWorld().getEntityManager().getEntities()) {
             if (e.equals(this))
                 continue;
-            if (e.getCollisionBounds(0, 0).intersects(cb)) {
-                handler.getWorld().setGameover();
-                e.hurt(1);
+            if (intersects(e.getCollisionBounds(), bounds)) {
+                //handler.getWorld().setGameover();
+                //e.hurt(1);
+                //hurt(1);
                 return;
             }
-        }*/
-       // if (!checkEntityCollisions(xMove, 0f)) {
-            //if(xMove > 0){//Moving right
-                /*int tx = (int) (x + xMove + bounds.x + bounds.width) / Tile.TILEWIDTH;
+        }
 
-                if(!collisionWithTile(tx, (int) (y + bounds.y) / Tile.TILEHEIGHT) &&
-                        !collisionWithTile(tx, (int) (y + bounds.y + bounds.height) / Tile.TILEHEIGHT)){*/
-                   // x += xMove;
-               /* }else{
-                    x = tx * Tile.TILEWIDTH - bounds.x - bounds.width - 1;
-                }*/
+        if(xMove > 0){//Moving right
+            int tx = (int) (x + xMove + width - marginRight) / handler.getGame().getTileWidth();
 
-           // }else if(xMove < 0){//Moving left
-               /* int tx = (int) (x + xMove + bounds.x) / Tile.TILEWIDTH;
-
-                if(!collisionWithTile(tx, (int) (y + bounds.y) / Tile.TILEHEIGHT) &&
-                        !collisionWithTile(tx, (int) (y + bounds.y + bounds.height) / Tile.TILEHEIGHT)){*/
-                //    x += xMove;
-               /* }else{
-                    x = tx * Tile.TILEWIDTH + Tile.TILEWIDTH - bounds.x;
-                }*/
-
-          //  }
-        //}
-    //}
-   // public void moveY() {
-        //Rectangle cb = getCollisionBounds(0, yMove);
-       /* for (Entity e : handler.getWorld().getEntityManager().getEntities()) {
-            if (e.equals(this))
-                continue;
-            if (e.getCollisionBounds(0, 0).intersects(cb)) {
-                e.hurt(1);
-                return;
+            if(!collisionWithTile(tx, (int) (y + marginTop) / handler.getGame().getTileHeight()) &&
+                    !collisionWithTile(tx, (int) (y + height - marginBottom) / handler.getGame().getTileHeight())){
+                x += xMove;
             }
-        }*/
-       // if (!checkEntityCollisions(0, yMove)) {
-            /*if(yMove < 0){//Up
-                int ty = (int) (y + yMove + bounds.y) / Tile.TILEHEIGHT;
+        }else if(xMove < 0){//Moving left
+            int tx = (int) (x + xMove + marginLeft) / handler.getGame().getTileWidth();
 
-                if(!collisionWithTile((int) (x + bounds.x) / Tile.TILEWIDTH, ty) &&
-                        !collisionWithTile((int) (x + bounds.x + bounds.width) / Tile.TILEWIDTH, ty)){*/
-              //      y += yMove;
-               /* }else{
-                    y = ty * Tile.TILEHEIGHT + Tile.TILEHEIGHT - bounds.y;
-                }*/
+            if(!collisionWithTile(tx, (int) (y + marginTop) / handler.getGame().getTileHeight()) &&
+                    !collisionWithTile(tx, (int) (y + height - marginBottom) / handler.getGame().getTileHeight())){
+                x += xMove;
+            }
+        }
+    }
+    public void moveY() {
+        if (yMove > 0) {//Up
+            int ty = (int) (y + yMove + height - marginBottom) / handler.getGame().getTileHeight();
+            if (!collisionWithTile((int) (x + marginLeft) / handler.getGame().getTileWidth(), ty) &&
+                    !collisionWithTile((int) (x + width - marginRight) / handler.getGame().getTileWidth(), ty)) {
+                y += yMove;
+            }
+        } else if (yMove < 0) {//Down
+            int ty = (int) (y + yMove - marginTop) / handler.getGame().getTileWidth();
 
-            /*}else if(yMove > 0){//Down
-                int ty = (int) (y + yMove + bounds.y + bounds.height) / Tile.TILEHEIGHT;
-
-                if(!collisionWithTile((int) (x + bounds.x) / Tile.TILEWIDTH, ty) &&
-                        !collisionWithTile((int) (x + bounds.x + bounds.width) / Tile.TILEWIDTH, ty)){*/
-                 //   y += yMove;
-                /*}else{
-                    y = ty * Tile.TILEHEIGHT - bounds.y - bounds.height - 1;
-                }*/
-
-           // }
-        //}
-  //  }
+            if (!collisionWithTile((int) (x + marginLeft) / handler.getGame().getTileWidth(), ty) &&
+                    !collisionWithTile((int) (x + width - marginRight) / handler.getGame().getTileWidth(), ty)) {
+                y += yMove;
+            }
+        }
+    }
 
     @Override
     public void die() {
@@ -164,7 +145,7 @@ public class Pokemon extends Creature{
         // TODO Auto-generated method stub
 
         g.drawBitmap(pokemonimg.createScaledBitmap(pokemonimg, tileWidth, tileHeight, false), (int) (x-handler.getGame().getGameCamera().getxOffset()), (int) (y-handler.getGame().getGameCamera().getyOffset()), null);
-        g.drawRect(bounds,paint);
+        //g.drawRect(bounds,paint);
 
         //g.drawBitmap(pokemonimg, (int) (x - handler.getGameCamera().getxOffset()),
                 //(int) (y - handler.getGameCamera().getyOffset()));

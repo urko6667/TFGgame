@@ -47,13 +47,13 @@ public abstract class Creature extends Entity {
         Log.d("mytag","y="+ y +", bounds.top="+bounds.top+", bounds.height=" + bounds.height());
         Log.d("mytag","x="+ x +",width=" + width + ", marginright=" + marginRight + ", tilewidth=" + handler.getGame().getTileWidth() +", coord x="+((x + xMove + width + marginRight) / handler.getGame().getTileWidth()));
         if(xMove > 0){//Moving right
-            int tx = (int) (x + xMove + width + marginRight) / handler.getGame().getTileWidth();
+            int tx = (int) (x + xMove + width - marginRight) / handler.getGame().getTileWidth();
 
             if(!collisionWithTile(tx, (int) (y + marginTop) / handler.getGame().getTileHeight()) &&
                     !collisionWithTile(tx, (int) (y + height - marginBottom) / handler.getGame().getTileHeight())){
                 x += xMove;
             }else{
-                x = tx * handler.getGame().getTileWidth() + marginRight - width +marginLeft - 1;
+                x = tx * handler.getGame().getTileWidth() + marginRight - width  - 1;
             }
 
         }else if(xMove < 0){//Moving left
@@ -63,7 +63,7 @@ public abstract class Creature extends Entity {
                     !collisionWithTile(tx, (int) (y + height - marginBottom) / handler.getGame().getTileHeight())){
                 x += xMove;
             }else{
-                x = tx * handler.getGame().getTileWidth() + handler.getGame().getTileWidth() - marginRight;
+                x = tx * handler.getGame().getTileWidth() + handler.getGame().getTileWidth() - marginLeft +1;
             }
 
         }
@@ -82,7 +82,7 @@ public abstract class Creature extends Entity {
 
             }else{
 
-                y = ty * handler.getGame().getTileHeight() - marginTop - height - 1;
+                y = ty * handler.getGame().getTileHeight() + marginBottom - height -1;
             }
 
         }else if(yMove < 0){//Down
@@ -92,7 +92,7 @@ public abstract class Creature extends Entity {
                     !collisionWithTile((int) (x + width - marginRight) / handler.getGame().getTileWidth(), ty)){
                 y += yMove;
             }else{
-                y = ty * handler.getGame().getTileHeight() + handler.getGame().getTileHeight() - marginBottom;            }
+                y = ty * handler.getGame().getTileHeight() + handler.getGame().getTileHeight() - marginTop +1;            }
 
         }
     }

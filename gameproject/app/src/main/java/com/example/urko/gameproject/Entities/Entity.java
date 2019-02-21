@@ -52,12 +52,14 @@ public abstract class Entity {
         }*/
         return false;
     }
-
-    public Rectangle getCollisionBounds(float xOffset, float yOffset) {
+ public Rect getCollisionBounds(){
+        return bounds;
+ }
+    /*public Rectangle getCollisionBounds(float xOffset, float yOffset) {
         //return new Rectangle((int)(x+bounds.x+xOffset),(int) (y+bounds.y + yOffset), bounds.width, bounds.height);
         return new Rectangle();
 
-    }
+    }*/
     public int getHealth() {
         return health;
     }
@@ -96,5 +98,8 @@ public abstract class Entity {
     }
     public void setHeight(int height) {
         this.height = height;
+    }
+    public void setBounds(Rect r){
+        this.bounds=r;
     }
 }
