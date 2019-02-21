@@ -98,6 +98,7 @@ private double[][] movecontrol;
     }
     public void init(){
         Log.d("mytag","init");
+
         handler= new Handler(this);
         gameCamera= new GameCamera(handler,0,0);
         input= new Input();
@@ -180,8 +181,14 @@ private double[][] movecontrol;
         canvas2.drawColor(Color.TRANSPARENT,PorterDuff.Mode.CLEAR);
         world.render(canvas,canvas2);
 
-        imageView.invalidate(0,0,width,height);
-        imageView2.invalidate(0,0,width,height);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                imageView.invalidate(0,0,width,height);
+                imageView2.invalidate(0,0,width,height);
+            }
+        });
+
 
     }
     public synchronized void start(){
