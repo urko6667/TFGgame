@@ -92,10 +92,10 @@ private double[][] movecontrol;
     }
     public void init(){
         Log.d("mytag","init");
-
+        handler= new Handler(this);
         gameCamera= new GameCamera(handler,0,0);
         input= new Input();
-        handler= new Handler(this);
+
 
         control = (ImageView) findViewById(R.id.move);
         imageView=(ImageView) findViewById(R.id.myimageview);

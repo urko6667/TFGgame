@@ -11,16 +11,22 @@ public abstract class Creature extends Entity {
     public static final int DEFAULT_WIDTH = 32;
     public static final int DEFAULT_HEIGHT = 32;
     protected float speed, xMove, yMove;
-
-    public Creature(Handler handler, float x, float y, int height, int width) {
+    protected int marginTop, marginLeft, marginRight, marginBottom;
+    public Creature(Handler handler, float x, float y, int height, int width, int marginTop, int marginRight, int marginBottom, int marginLeft) {
         super(handler, x, y, width, height);
         speed = DEFAULT_SPEED;
         yMove = 0;
         xMove = 0;
+
+        this.marginTop=marginTop;
+        this.marginLeft=marginLeft;
+        this.marginRight=marginRight;
+        this.marginBottom=marginBottom;
         /*
          * width=DEFAULT_WIDTH; height= DEFAULT_HEIGHT;
          */
     }
+
 
     public void move() {
         //if (!checkEntityCollisions(xMove, 0f))
@@ -33,27 +39,31 @@ public abstract class Creature extends Entity {
     public  void die(){
 
     }
-    public void moveX(){
-        Log.d("mytag","x="+x+", bounds.right="+bounds.right+", bounds.width=" + bounds.width());
-        Log.d("mytag","y="+y+", bounds.top="+bounds.top+", bounds.height=" + bounds.height());
-        if(xMove > 0){//Moving right
-            int tx = (int) (x + xMove + bounds.right + bounds.width()) / handler.getGame().getTileWidth();
+    public void contactDamage(){
 
-            if(!collisionWithTile(tx, (int) (y + bounds.top) / handler.getGame().getTileHeight()) &&
-                    !collisionWithTile(tx, (int) (y + bounds.top + bounds.height()) / handler.getGame().getTileHeight())){
+    }
+    public void moveX(){
+        Log.d("mytag","x="+ x +", bounds.right="+bounds.right+", bounds.width=" + bounds.width());
+        Log.d("mytag","y="+ y +", bounds.top="+bounds.top+", bounds.height=" + bounds.height());
+        Log.d("mytag","x="+ x +",width=" + width + ", marginright=" + marginRight + ", tilewidth=" + handler.getGame().getTileWidth() +", coord x="+((x + xMove + width + marginRight) / handler.getGame().getTileWidth()));
+        if(xMove > 0){//Moving right
+            int tx = (int) (x + xMove + width + marginRight) / handler.getGame().getTileWidth();
+
+            if(!collisionWithTile(tx, (int) (y + marginTop) / handler.getGame().getTileHeight()) &&
+                    !collisionWithTile(tx, (int) (y + height - marginBottom) / handler.getGame().getTileHeight())){
                 x += xMove;
             }else{
-                x = tx * handler.getGame().getTileWidth() - bounds.right - bounds.width() - 1;
+                x = tx * handler.getGame().getTileWidth() + marginRight - width +marginLeft - 1;
             }
 
         }else if(xMove < 0){//Moving left
-            int tx = (int) (x + xMove + bounds.right) / handler.getGame().getTileWidth();
+            int tx = (int) (x + xMove + marginLeft) / handler.getGame().getTileWidth();
 
-            if(!collisionWithTile(tx, (int) (y + bounds.top) / handler.getGame().getTileHeight()) &&
-                    !collisionWithTile(tx, (int) (y + bounds.top + bounds.height()) / handler.getGame().getTileHeight())){
+            if(!collisionWithTile(tx, (int) (y + marginTop) / handler.getGame().getTileHeight()) &&
+                    !collisionWithTile(tx, (int) (y + height - marginBottom) / handler.getGame().getTileHeight())){
                 x += xMove;
             }else{
-                x = tx * handler.getGame().getTileWidth() + handler.getGame().getTileWidth() - bounds.right;
+                x = tx * handler.getGame().getTileWidth() + handler.getGame().getTileWidth() - marginRight;
             }
 
         }
@@ -61,28 +71,28 @@ public abstract class Creature extends Entity {
     public void moveY(){
         Log.d("mytag","entra moveY, yMove=" + yMove);
         if(yMove > 0){//Up
-            /*int ty = (int) (y + yMove + bounds.y) / Tile.TILEHEIGHT;
+            int ty = (int) (y + yMove + height - marginBottom) / handler.getGame().getTileHeight();
 
-            if(!collisionWithTile((int) (x + bounds.x) / Tile.TILEWIDTH, ty) &&
-                    !collisionWithTile((int) (x + bounds.x + bounds.width) / Tile.TILEWIDTH, ty)){*/
+            if(!collisionWithTile((int) (x + marginLeft) / handler.getGame().getTileWidth(), ty) &&
+                    !collisionWithTile((int) (x + width - marginRight) / handler.getGame().getTileWidth(), ty)){
             Log.d("mytag","entra moveY2, y="+y);
 
             y += yMove;
             Log.d("mytag","entra moveY3, y="+y);
 
-           /* }else{
-                y = ty * Tile.TILEHEIGHT + Tile.TILEHEIGHT - bounds.y;
-            }*/
+            }else{
+
+                y = ty * handler.getGame().getTileHeight() - marginTop - height - 1;
+            }
 
         }else if(yMove < 0){//Down
-           /* int ty = (int) (y + yMove + bounds.y + bounds.height) / Tile.TILEHEIGHT;
+            int ty = (int) (y + yMove - marginTop) / handler.getGame().getTileWidth();
 
-            if(!collisionWithTile((int) (x + bounds.x) / Tile.TILEWIDTH, ty) &&
-                    !collisionWithTile((int) (x + bounds.x + bounds.width) / Tile.TILEWIDTH, ty)){*/
+            if(!collisionWithTile((int) (x + marginLeft) / handler.getGame().getTileWidth(), ty) &&
+                    !collisionWithTile((int) (x + width - marginRight) / handler.getGame().getTileWidth(), ty)){
                 y += yMove;
-           /* }else{
-                y = ty * Tile.TILEHEIGHT - bounds.y - bounds.height - 1;
-            }*/
+            }else{
+                y = ty * handler.getGame().getTileHeight() + handler.getGame().getTileHeight() - marginBottom;            }
 
         }
     }
@@ -122,5 +132,17 @@ public abstract class Creature extends Entity {
 
     public void setSpeed(float speed) {
         this.speed = speed;
+    }
+    public void  setMarginTop(int m){
+        marginTop=m;
+    }
+    public void  setMarginRight(int m){
+        marginRight=m;
+    }
+    public void  setMarginLeft(int m){
+        marginLeft=m;
+    }
+    public void  setMarginBottom(int m){
+        marginBottom=m;
     }
 }

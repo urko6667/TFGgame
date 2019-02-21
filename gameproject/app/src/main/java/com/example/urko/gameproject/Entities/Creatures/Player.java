@@ -20,14 +20,18 @@ public class Player extends Creature{
     private int orientation=1;
     private boolean movement=true;
     private int tileWidth, tileHeight;
+    public static int marginTop, marginLeft, marginRight, marginBottom;
     private Paint paint;
     public Player(Handler handler, float x, float y, int tileWidth, int tileHeight) {
-        super(handler, x, y, Creature.DEFAULT_WIDTH, Creature.DEFAULT_HEIGHT);
+        super(handler, x, y, tileWidth, tileHeight, tileHeight/10, tileWidth/10, tileHeight/10, tileWidth/10);
         /*bounds.x = 5;
         bounds.y = 24;
         bounds.width = 22;
         bounds.height = 18;*/
-
+        marginBottom=tileHeight/10;
+        marginLeft=tileWidth/10;
+        marginRight=tileWidth/10;
+        marginTop=tileHeight/10;
         health=1;
         speed=tileWidth/5;
         this.tileHeight=tileHeight;
@@ -38,8 +42,10 @@ public class Player extends Creature{
         animUp = new Animation(200, Assets.player_up);
         lastAnimation = animDown;
         speed=50;
+
         paint = new Paint();
         this.paint.setColor(Color.RED);
+
     }
 
     @Override
@@ -53,7 +59,7 @@ public class Player extends Creature{
         getInput();
         //if(movement)
             move();
-        bounds.set((int)x+2,(int)y+tileHeight/2,(int)x+tileWidth-4,(int)y+tileHeight+tileHeight/2);
+        bounds.set((int)x+marginLeft,(int)y+marginTop,(int)x+tileWidth-marginRight,(int)y+marginTop+tileHeight-marginBottom);
         handler.getGameCamera().centerOnEntity(this);
         //checkAttacks();
     }
@@ -242,9 +248,8 @@ public class Player extends Creature{
 
     @Override
     public void render(Canvas g) {
-        g.drawBitmap(getCurrentAnimationFrame().createScaledBitmap(Assets.player, tileWidth, tileHeight+tileHeight/2, false), (int) (x-handler.getGame().getGameCamera().getxOffset()) , (int) ((y-tileHeight/2)-handler.getGame().getGameCamera().getyOffset()), null);
         g.drawBitmap(getCurrentAnimationFrame().createScaledBitmap(getCurrentAnimationFrame(), tileWidth, tileHeight+tileHeight/2, false), x, y-tileHeight/2, null);
-        g.drawRect(bounds,paint );
+        g.drawRect(bounds,paint);
        // g.drawBitmap(Assets.player, (int) (x - handler.getGameCamera().getxOffset()),
                // (int) (y - handler.getGameCamera().getyOffset()));
 

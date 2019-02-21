@@ -37,7 +37,7 @@ public class World {
         //entityManager.addEntity(new Pokeball(handler,handler.getGame().getTileWidth()*2,handler.getGame().getTileHeight()*3));
        // entityManager.addEntity(new Pokeball(handler,handler.getGame().getTileWidth()*3,handler.getGame().getTileHeight()*2));
         entityManager.addEntity(new Pokemon(handler,5*tileWidth,5*tileHeight,tileWidth,tileHeight));
-        //entityManager.addEntity(new Pokemon(handler,25,25,tileWidth,tileHeight));
+        entityManager.addEntity(new Pokemon(handler,tileWidth*4,tileHeight*4,tileWidth,tileHeight));
 
     }
     public EntityManager getEntityManager() {

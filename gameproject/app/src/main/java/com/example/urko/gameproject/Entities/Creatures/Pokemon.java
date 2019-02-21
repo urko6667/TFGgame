@@ -2,6 +2,8 @@ package com.example.urko.gameproject.Entities.Creatures;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.support.constraint.solver.widgets.Rectangle;
 
 import com.example.urko.gameproject.Handler;
@@ -10,21 +12,32 @@ import com.example.urko.gameproject.gfx.Assets;
 public class Pokemon extends Creature{
 
     private long lastMoveTimer, moveCooldown = 400, moveTimer = moveCooldown;
-    private Bitmap pokemonimg = Assets.pokemon;
+    private Bitmap pokemonimg = Assets.pokemon[0];
     private int tileWidth, tileHeight;
+    public static int marginTop, marginLeft, marginRight, marginBottom;
+    private Paint paint;
     public Pokemon(Handler handler, float x, float y, int tileWidth, int tileHeight) {
-        super(handler, x, y, Creature.DEFAULT_WIDTH, Creature.DEFAULT_HEIGHT);
+        super(handler, x, y, Creature.DEFAULT_WIDTH, Creature.DEFAULT_HEIGHT, marginTop, marginRight, marginBottom, marginLeft);
        /* bounds.x = 1;
         bounds.y = 1;
         bounds.width = 30;
         bounds.height = 30;*/
+        marginBottom=tileHeight/20;
+        marginLeft=tileWidth/10;
+        marginRight=tileWidth/10;
+        marginTop=tileHeight/10;
+        setMarginBottom(marginBottom);
+        setMarginLeft(marginLeft);
+        setMarginRight(marginRight);
+        setMarginTop(marginTop);
         health=1;
         this.x=x-handler.getGameCamera().getyOffset();
         this.y=y-handler.getGameCamera().getyOffset();
 
         this.tileHeight=tileHeight;
         this.tileWidth=tileWidth;
-
+        paint = new Paint();
+        this.paint.setColor(Color.RED);
     }
 
 
@@ -32,7 +45,7 @@ public class Pokemon extends Creature{
     public void tick() {
         // TODO Auto-generated method stub
         RandomMove();
-
+        bounds.set((int)x+marginLeft,(int)y+marginTop,(int)x+tileWidth-marginRight,(int)y+marginTop+tileHeight-marginBottom);
     }
     public void RandomMove() {
         moveTimer += System.currentTimeMillis() - lastMoveTimer;
@@ -42,34 +55,34 @@ public class Pokemon extends Creature{
         float dir = (float) Math.random();
         dir=dir*4;
         Math.ceil(dir);
-        /*switch((int)dir) {
+        switch((int)dir) {
             case 1:
-                xMove=32;
+                xMove=tileWidth;
                 pokemonimg = Assets.pokemon[2];
                 moveX();
                 break;
             case 2:
-                xMove=-32;
+                xMove=-tileWidth;
                 pokemonimg = Assets.pokemon[1];
                 moveX();
                 break;
             case 3:
-                yMove=32;
+                yMove=tileHeight;
                 pokemonimg = Assets.pokemon[0];
                 moveY();
                 break;
             case 4:
-                yMove=-32;
+                yMove=-tileHeight;
                 pokemonimg = Assets.pokemon[3];
                 moveY();
                 break;
-        }*/
+        }
 
         moveTimer=0;
 
 
     }
-    public void moveX() {
+   // public void moveX() {
        /* Rectangle cb = getCollisionBounds(xMove, 0);
         for (Entity e : handler.getWorld().getEntityManager().getEntities()) {
             if (e.equals(this))
@@ -81,30 +94,30 @@ public class Pokemon extends Creature{
             }
         }*/
        // if (!checkEntityCollisions(xMove, 0f)) {
-            if(xMove > 0){//Moving right
+            //if(xMove > 0){//Moving right
                 /*int tx = (int) (x + xMove + bounds.x + bounds.width) / Tile.TILEWIDTH;
 
                 if(!collisionWithTile(tx, (int) (y + bounds.y) / Tile.TILEHEIGHT) &&
                         !collisionWithTile(tx, (int) (y + bounds.y + bounds.height) / Tile.TILEHEIGHT)){*/
-                    x += xMove;
+                   // x += xMove;
                /* }else{
                     x = tx * Tile.TILEWIDTH - bounds.x - bounds.width - 1;
                 }*/
 
-            }else if(xMove < 0){//Moving left
+           // }else if(xMove < 0){//Moving left
                /* int tx = (int) (x + xMove + bounds.x) / Tile.TILEWIDTH;
 
                 if(!collisionWithTile(tx, (int) (y + bounds.y) / Tile.TILEHEIGHT) &&
                         !collisionWithTile(tx, (int) (y + bounds.y + bounds.height) / Tile.TILEHEIGHT)){*/
-                    x += xMove;
+                //    x += xMove;
                /* }else{
                     x = tx * Tile.TILEWIDTH + Tile.TILEWIDTH - bounds.x;
                 }*/
 
-            }
+          //  }
         //}
-    }
-    public void moveY() {
+    //}
+   // public void moveY() {
         //Rectangle cb = getCollisionBounds(0, yMove);
        /* for (Entity e : handler.getWorld().getEntityManager().getEntities()) {
             if (e.equals(this))
@@ -114,13 +127,13 @@ public class Pokemon extends Creature{
                 return;
             }
         }*/
-        if (!checkEntityCollisions(0, yMove)) {
+       // if (!checkEntityCollisions(0, yMove)) {
             /*if(yMove < 0){//Up
                 int ty = (int) (y + yMove + bounds.y) / Tile.TILEHEIGHT;
 
                 if(!collisionWithTile((int) (x + bounds.x) / Tile.TILEWIDTH, ty) &&
                         !collisionWithTile((int) (x + bounds.x + bounds.width) / Tile.TILEWIDTH, ty)){*/
-                    y += yMove;
+              //      y += yMove;
                /* }else{
                     y = ty * Tile.TILEHEIGHT + Tile.TILEHEIGHT - bounds.y;
                 }*/
@@ -130,14 +143,14 @@ public class Pokemon extends Creature{
 
                 if(!collisionWithTile((int) (x + bounds.x) / Tile.TILEWIDTH, ty) &&
                         !collisionWithTile((int) (x + bounds.x + bounds.width) / Tile.TILEWIDTH, ty)){*/
-                    y += yMove;
+                 //   y += yMove;
                 /*}else{
                     y = ty * Tile.TILEHEIGHT - bounds.y - bounds.height - 1;
                 }*/
 
-            }
+           // }
         //}
-    }
+  //  }
 
     @Override
     public void die() {
@@ -150,7 +163,8 @@ public class Pokemon extends Creature{
     public void render(Canvas g) {
         // TODO Auto-generated method stub
 
-        g.drawBitmap(Assets.pokemon.createScaledBitmap(Assets.pokemon, tileWidth, tileHeight, false), (int) (x-handler.getGame().getGameCamera().getxOffset()), (int) (y-handler.getGame().getGameCamera().getyOffset()), null);
+        g.drawBitmap(pokemonimg.createScaledBitmap(pokemonimg, tileWidth, tileHeight, false), (int) (x-handler.getGame().getGameCamera().getxOffset()), (int) (y-handler.getGame().getGameCamera().getyOffset()), null);
+        g.drawRect(bounds,paint);
 
         //g.drawBitmap(pokemonimg, (int) (x - handler.getGameCamera().getxOffset()),
                 //(int) (y - handler.getGameCamera().getyOffset()));
