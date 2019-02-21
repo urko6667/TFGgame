@@ -3,19 +3,28 @@ package com.example.urko.gameproject.gfx;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.util.DisplayMetrics;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.example.urko.gameproject.R;
 
 public class Assets {
 
 
-    private static final int width = 96, height= 96;
+    private static int width = 96, height= 96;
     private static float rWidth, rHeight;
     public static Bitmap sheet1, player, dirt, grass, stone, dirt1, dirt2, dirt3, dirt4,water, water1,water2,water3,water4, pokeball;
     public static Bitmap[] player_down,masterSword_right,masterSword_down,goldSword_down,masterSword_left,goldSword_right,goldSword_left,ironSword_right,ironSword_down,ironSword_left,player_left,player_right,player_up, pokemon, rustSword_up, rustSword_left, rustSword_right, rustSword_down, ironSword_up, goldSword_up, masterSword_up;
     public static void init(Resources res,float vWidth,float vHeight) {
         //Uri path = Uri.parse("android.resource://com.example.urko.gameproject/" + R.mipmap.player);
         //String path2 = path.toString();
+
+        if(vHeight <= 720){
+            height= 64;
+            width = 64;
+        }
+
         rWidth=vWidth;
         rHeight=vHeight;
         SpriteSheet sheet2 = new SpriteSheet(ImageLoader.loadImage(res, R.drawable.player));
