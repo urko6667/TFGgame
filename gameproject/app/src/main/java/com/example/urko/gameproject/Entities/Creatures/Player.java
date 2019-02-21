@@ -37,7 +37,7 @@ public class Player extends Creature{
         animRight = new Animation(200, Assets.player_right);
         animUp = new Animation(200, Assets.player_up);
         lastAnimation = animDown;
-        speed=50;
+        //speed=30;
         paint = new Paint();
         this.paint.setColor(Color.RED);
     }
@@ -242,9 +242,8 @@ public class Player extends Creature{
 
     @Override
     public void render(Canvas g) {
-        g.drawBitmap(getCurrentAnimationFrame().createScaledBitmap(Assets.player, tileWidth, tileHeight+tileHeight/2, false), (int) (x-handler.getGame().getGameCamera().getxOffset()) , (int) ((y-tileHeight/2)-handler.getGame().getGameCamera().getyOffset()), null);
-        g.drawBitmap(getCurrentAnimationFrame().createScaledBitmap(getCurrentAnimationFrame(), tileWidth, tileHeight+tileHeight/2, false), x, y-tileHeight/2, null);
-        g.drawRect(bounds,paint );
+        g.drawBitmap(getCurrentAnimationFrame().createScaledBitmap(getCurrentAnimationFrame(), tileWidth, tileHeight+tileHeight/2, false), (int) (x-handler.getGame().getGameCamera().getxOffset()) , (int) ((y-tileHeight/2)-handler.getGame().getGameCamera().getyOffset()), null);
+        g.drawRect(bounds,paint);
        // g.drawBitmap(Assets.player, (int) (x - handler.getGameCamera().getxOffset()),
                // (int) (y - handler.getGameCamera().getyOffset()));
 

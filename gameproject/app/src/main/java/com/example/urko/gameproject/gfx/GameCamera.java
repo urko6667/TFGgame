@@ -16,30 +16,20 @@ public class GameCamera {
         this.yOffset=yOffset;
     }
     public void checkBlankSpace() {
+
+    //Limites de mapa del eje X
         if(xOffset < 0){
-
-            Log.d("mytagM","yOffset es " + yOffset);
-            Log.d("mytagM","xOffset es " + xOffset);
-            Log.d("mytagM","getgameheight es " + handler.getGame().getHeight());
-            Log.d("mytagM","gettileheight es " + handler.getGame().getTileHeight());
-            Log.d("mytagM","getheight es " + handler.getWorld().getHeight());
-
             xOffset = 0;
-        }else if(xOffset > handler.getGame().getWidth() * handler.getGame().getTileWidth() - handler.getGame().getWidth()){
-            xOffset = handler.getWidth() * handler.getGame().getTileWidth();
+        }else if(xOffset > handler.getWorld().getWidth() * handler.getGame().getTileWidth() - handler.getGame().getWidth()){
+            xOffset = (handler.getWorld().getWidth() * handler.getGame().getTileWidth()-handler.getGame().getWidth());
 
         }
-
+    //Limites de mapa del eje Y
         if(yOffset < 0){
             yOffset = 0;
-        }
-        else if(yOffset > (handler.getWorld().getHeight() * handler.getGame().getTileHeight()-handler.getGame().getHeight())){
+        }else if(yOffset > (handler.getWorld().getHeight() * handler.getGame().getTileHeight()-handler.getGame().getHeight())){
             yOffset = (handler.getWorld().getHeight() * handler.getGame().getTileHeight()-handler.getGame().getHeight());
         }
-
-        
-
-
 
 
     }
@@ -68,7 +58,6 @@ public class GameCamera {
     public void setyOffset(float yOffset) {
         this.yOffset = yOffset;
     }
-
 
 
 }
