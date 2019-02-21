@@ -52,6 +52,8 @@ private double[][] movecontrol;
                         | View.SYSTEM_UI_FLAG_FULLSCREEN
                         | View.SYSTEM_UI_FLAG_IMMERSIVE);
 
+
+
         //View decorView = getWindow().getDecorVie w();
 // Hide the status bar.
        // int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
@@ -80,11 +82,15 @@ private double[][] movecontrol;
         movecontrol[3][1]=34.5;
         movecontrol[3][2]=30.5;
         movecontrol[3][3]=63.7;
+
         Display display = getWindowManager(). getDefaultDisplay();
         Point size = new Point();
         display. getSize(size);
+
         width = size. x;
         height = size. y;
+        Log.d("mytaga","tamaño X" + width);
+        Log.d("mytaga","tamaño Y" + height);
         tileWidth=width/16;
         tileHeight=height/9;
         Log.d("mytag","oncreate");
