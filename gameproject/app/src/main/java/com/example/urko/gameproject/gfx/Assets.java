@@ -27,7 +27,7 @@ public class Assets {
 
         rWidth=vWidth;
         rHeight=vHeight;
-        SpriteSheet sheet2 = new SpriteSheet(ImageLoader.loadImage(res, R.drawable.player));
+        SpriteSheet sheet2 = new SpriteSheet(ImageLoader.loadImage(res, R.drawable.player3));
         SpriteSheet sheet3 = new SpriteSheet(ImageLoader.loadImage(res,R.drawable.tileset));
         SpriteSheet sheetpok = new SpriteSheet(ImageLoader.loadImage(res,R.drawable.pokemon));
         SpriteSheet sheetball = new SpriteSheet(ImageLoader.loadImage(res,R.drawable.pokeball));

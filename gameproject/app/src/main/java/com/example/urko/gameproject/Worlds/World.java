@@ -36,7 +36,7 @@ public class World {
         entityManager.getPlayer().setY(tileHeight);
         //entityManager.addEntity(new Pokeball(handler,handler.getGame().getTileWidth()*2,handler.getGame().getTileHeight()*3));
        // entityManager.addEntity(new Pokeball(handler,handler.getGame().getTileWidth()*3,handler.getGame().getTileHeight()*2));
-        entityManager.addEntity(new Pokemon(handler,5*tileWidth,5*tileHeight,tileWidth,tileHeight));
+        //entityManager.addEntity(new Pokemon(handler,5*tileWidth,5*tileHeight,tileWidth,tileHeight));
         entityManager.addEntity(new Pokemon(handler,tileWidth*4,tileHeight*4,tileWidth,tileHeight));
 
     }
@@ -44,6 +44,10 @@ public class World {
         return entityManager;
     }
     public void addPokemons() {
+
+        entityManager.addEntity(new Pokemon(handler,tileWidth*4,tileHeight*4,tileWidth,tileHeight));
+        entityManager.addEntity(new Pokemon(handler,tileWidth*3,tileHeight*7,tileWidth,tileHeight));
+        entityManager.addEntity(new Pokemon(handler,tileWidth*7,tileHeight*3,tileWidth,tileHeight));
         int i=0;
         while( i<2) {
             float px=(float) Math.random();

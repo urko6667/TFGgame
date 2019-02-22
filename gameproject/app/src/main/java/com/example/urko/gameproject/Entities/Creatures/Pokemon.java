@@ -95,7 +95,7 @@ public class Pokemon extends Creature{
             if (intersects(e.getCollisionBounds(), bounds)) {
                 //handler.getWorld().setGameover();
                 //e.hurt(1);
-                //hurt(1);
+                hurt(1);
                 return;
             }
         }
@@ -117,6 +117,16 @@ public class Pokemon extends Creature{
         }
     }
     public void moveY() {
+        for (Entity e : handler.getWorld().getEntityManager().getEntities()) {
+            if (e.equals(this))
+                continue;
+            if (intersects(e.getCollisionBounds(), bounds)) {
+                //handler.getWorld().setGameover();
+                //e.hurt(1);
+                e.hurt(1);
+                return;
+            }
+        }
         if (yMove > 0) {//Up
             int ty = (int) (y + yMove + height - marginBottom) / handler.getGame().getTileHeight();
             if (!collisionWithTile((int) (x + marginLeft) / handler.getGame().getTileWidth(), ty) &&

@@ -69,6 +69,9 @@ public class EntityManager {
             if(a.getY()+a.getHeight() < b.getY()+b.getHeight() ) {
                 return -1;
             }
+            if(a.getY()+a.getHeight() == b.getY()+b.getHeight() ) {
+                return 0;
+            }
             return 1;
         }
 
