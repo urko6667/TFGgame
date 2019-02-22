@@ -2,6 +2,8 @@ package com.example.urko.gameproject.Entities;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Rect;
+import android.util.Log;
 
 import com.example.urko.gameproject.Entities.Creatures.Player;
 import com.example.urko.gameproject.Handler;
@@ -32,6 +34,12 @@ public class EntityManager {
                 entities.remove(e);
         }
         Collections.sort(entities, new renderSorter());
+        for(int i = 0; i< entities.size();i++) {
+            enemyCollision(player.bounds, entities.get(i).bounds);
+            if(enemyCollision(player.bounds, entities.get(i).bounds)){
+                Log.d("mytaga","" + i);
+            }
+        }
     }
     public void render(Canvas g) {
         for(Entity e : entities) {
@@ -75,5 +83,11 @@ public class EntityManager {
             return 1;
         }
 
-    };
+    }
+    public boolean enemyCollision(Rect playerrect, Rect enemyrect){
+        if(Rect.intersects(playerrect,enemyrect)){
+            player.die();
+            return true;
+        }else{return false;}
+    }
 }

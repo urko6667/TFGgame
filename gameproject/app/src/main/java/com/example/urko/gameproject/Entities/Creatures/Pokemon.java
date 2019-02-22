@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.support.constraint.solver.widgets.Rectangle;
 import android.util.Log;
 
@@ -18,14 +19,17 @@ public class Pokemon extends Creature{
     private long lastMoveTimer, moveCooldown = 400, moveTimer = moveCooldown;
     private Bitmap pokemonimg = Assets.pokemon[0];
     private int tileWidth, tileHeight;
+    private float playerX, playerY;
     public static int marginTop, marginLeft, marginRight, marginBottom;
     private Paint paint;
     public Pokemon(Handler handler, float x, float y, int tileWidth, int tileHeight) {
         super(handler, x, y, Creature.DEFAULT_WIDTH, Creature.DEFAULT_HEIGHT, marginTop, marginRight, marginBottom, marginLeft);
+
        /* bounds.x = 1;
         bounds.y = 1;
         bounds.width = 30;
         bounds.height = 30;*/
+
         marginBottom=tileHeight/10;
         marginLeft=tileWidth/10;
         marginRight=tileWidth/10;
@@ -42,6 +46,8 @@ public class Pokemon extends Creature{
         this.tileWidth=tileWidth;
         paint = new Paint();
         this.paint.setColor(Color.RED);
+
+
     }
 
 
@@ -53,6 +59,7 @@ public class Pokemon extends Creature{
         setBounds(bounds);
     }
     public void RandomMove() {
+
         moveTimer += System.currentTimeMillis() - lastMoveTimer;
         lastMoveTimer = System.currentTimeMillis();
         if(moveTimer < moveCooldown)
@@ -61,30 +68,38 @@ public class Pokemon extends Creature{
         dir=dir*4;
         Math.ceil(dir);
         switch((int)dir) {
-            case 1:
+            case 1://DERECHA
+
                 xMove=tileWidth;
+
                 pokemonimg = Assets.pokemon[2];
                 moveX();
                 break;
-            case 2:
+            case 2://IZQUIERDA
+
                 xMove=-tileWidth;
+
                 pokemonimg = Assets.pokemon[1];
                 moveX();
                 break;
-            case 3:
+            case 3://ARRIBA
+
                 yMove=tileHeight;
+
                 pokemonimg = Assets.pokemon[0];
                 moveY();
                 break;
-            case 4:
+            case 4://ABAJO
+
                 yMove=-tileHeight;
+
                 pokemonimg = Assets.pokemon[3];
                 moveY();
+
                 break;
         }
 
         moveTimer=0;
-
 
     }
     public void moveX(){
@@ -165,7 +180,6 @@ public class Pokemon extends Creature{
 		 (y + bounds.y - handler.getGameCamera().getyOffset()), bounds.width,
 		 bounds.height);*/
     }
-
 
 
 }

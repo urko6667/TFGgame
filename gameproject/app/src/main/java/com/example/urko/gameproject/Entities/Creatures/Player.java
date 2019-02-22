@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.Log;
 
+import com.example.urko.gameproject.Entities.Entity;
 import com.example.urko.gameproject.Handler;
 import com.example.urko.gameproject.gfx.Animation;
 import com.example.urko.gameproject.gfx.Assets;
@@ -52,7 +53,7 @@ public class Player extends Creature{
         animLeft.tick();
         animRight.tick();
         animUp.tick();
-        Log.d("mytag","entra player tick");
+        Log.d("mytaga","entra player tick");
 
         getInput();
         //if(movement)
