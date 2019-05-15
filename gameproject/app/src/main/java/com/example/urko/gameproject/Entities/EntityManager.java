@@ -26,19 +26,20 @@ public class EntityManager {
     }
     public void tick() {
 
-
         for(int i = 0; i< entities.size();i++) {
             Entity e = entities.get(i);
             e.tick();
-            if(!e.isActive())
+            Log.d("mytaga","Vida de  " + e + ":" + e.getHealth()); //Player desaparece
+            if(!e.isActive() && player.health == 0) {
+                Log.d("mytaga","FUCKING RIP " + e); //Player desaparece
                 entities.remove(e);
+            }
         }
         Collections.sort(entities, new renderSorter());
-        for(int i = 0; i< entities.size();i++) {
-            enemyCollision(player.bounds, entities.get(i).bounds);
-            if(enemyCollision(player.bounds, entities.get(i).bounds)){
-                Log.d("mytaga","" + i);
-            }
+        for(int i = 1; i< entities.size();i++) {
+
+           // enemyCollision(player.bounds, entities.get(i).bounds);
+            //if(enemyCollision(player.bounds, entities.get(i).bounds)){}
         }
     }
     public void render(Canvas g) {
@@ -51,7 +52,6 @@ public class EntityManager {
     public void addEntity(Entity e) {
         entities.add(e);
     }
-
     public Handler getHandler() {
         return handler;
     }
@@ -85,9 +85,19 @@ public class EntityManager {
 
     }
     public boolean enemyCollision(Rect playerrect, Rect enemyrect){
+
         if(Rect.intersects(playerrect,enemyrect)){
-            player.die();
+            Log.d("mytaga","Enemigo tocado");
+            /*player.x -= player.getSpeed();  RETROCESO SI TOCA(falta poner desde donde esta tocando)
+            player.x += player.getSpeed();
+            player.y -= player.getSpeed();
+            player.y += player.getSpeed();*/
+            //player.die();
             return true;
-        }else{return false;}
+        }
+        else{
+
+            return false;
+        }
     }
 }

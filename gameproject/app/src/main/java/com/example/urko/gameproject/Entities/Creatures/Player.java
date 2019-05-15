@@ -135,7 +135,6 @@ public class Player extends Creature{
         if (handler.getInput().down) {
             yMove = speed;
             Log.d("mytag","movement: abajo");
-
         }
         if (handler.getInput().left) {
             xMove = -speed;

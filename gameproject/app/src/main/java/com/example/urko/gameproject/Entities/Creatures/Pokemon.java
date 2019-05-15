@@ -138,7 +138,7 @@ public class Pokemon extends Creature{
             if (intersects(e.getCollisionBounds(), bounds)) {
                 //handler.getWorld().setGameover();
                 //e.hurt(1);
-                e.hurt(1);
+                hurt(1);
                 return;
             }
         }
