@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+import static android.graphics.Rect.intersects;
+
 public class EntityManager {
     private Handler handler;
     private Player player;
@@ -29,7 +31,6 @@ public class EntityManager {
         for(int i = 0; i< entities.size();i++) {
             Entity e = entities.get(i);
             e.tick();
-            Log.d("mytaga","Vida de  " + e + ":" + e.getHealth()); //Player desaparece
             if(!e.isActive() && player.health == 0) {
                 Log.d("mytaga","FUCKING RIP " + e); //Player desaparece
                 entities.remove(e);
@@ -38,7 +39,7 @@ public class EntityManager {
         Collections.sort(entities, new renderSorter());
         for(int i = 1; i< entities.size();i++) {
 
-           // enemyCollision(player.bounds, entities.get(i).bounds);
+           enemyCollision(player.bounds, entities.get(i).bounds);
             //if(enemyCollision(player.bounds, entities.get(i).bounds)){}
         }
     }
@@ -86,13 +87,31 @@ public class EntityManager {
     }
     public boolean enemyCollision(Rect playerrect, Rect enemyrect){
 
-        if(Rect.intersects(playerrect,enemyrect)){
+        if(intersects(playerrect,enemyrect)){
             Log.d("mytaga","Enemigo tocado");
-            /*player.x -= player.getSpeed();  RETROCESO SI TOCA(falta poner desde donde esta tocando)
-            player.x += player.getSpeed();
-            player.y -= player.getSpeed();
-            player.y += player.getSpeed();*/
-            //player.die();
+            Log.d("mytaga","player X" + playerrect.exactCenterX());
+            Log.d("mytaga","player Y" + playerrect.exactCenterY());
+            Log.d("mytaga","enemy X" + enemyrect.exactCenterX());
+            Log.d("mytaga","enemy Y" + enemyrect.exactCenterY());
+
+            float wy = (playerrect.width() + enemyrect.width()) * (playerrect.centerY() - enemyrect.centerY());
+            float hx = (playerrect.height() + enemyrect.height()) * (playerrect.centerX() - enemyrect.centerX());
+
+            Log.d("mytaga","wy " + wy);
+            Log.d("mytaga","hx " + hx);
+
+            if (wy > hx){
+                if (wy > -hx)Log.d("mytaga","TOP");
+                else Log.d("mytaga","LEFT");
+            }
+
+            else{
+                if (wy > -hx) Log.d("mytaga","RIGHT");
+                else Log.d("mytaga","BOTTOM");
+            }
+
+
+            //player.health -=
             return true;
         }
         else{

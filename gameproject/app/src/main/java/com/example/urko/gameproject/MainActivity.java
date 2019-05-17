@@ -6,7 +6,9 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.PorterDuff;
+import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
@@ -35,6 +37,7 @@ private boolean running=false;
 private Thread thread;
 private ImageView imageView,imageView2, control;
 private int width, height, tileWidth, tileHeight;
+private MediaPlayer mp;
 
 
 
@@ -50,9 +53,11 @@ private double[][] movecontrol;
                         | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
                         | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                         | View.SYSTEM_UI_FLAG_FULLSCREEN
-                        | View.SYSTEM_UI_FLAG_IMMERSIVE);
+                        | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
 
-
+        mp = MediaPlayer.create(this, R.raw.stage1);
+        mp.start();
+        mp.setLooping(true);
 
         //View decorView = getWindow().getDecorVie w();
 // Hide the status bar.
@@ -213,8 +218,6 @@ private double[][] movecontrol;
         }
     }
 
-
-
     public int getWidth() {
         return width;
     }
@@ -243,5 +246,20 @@ private double[][] movecontrol;
         return input;
     }
 
+    @Override
+    public void onBackPressed(){
+        super.onBackPressed();
+        mp.pause();
+    }
+    @Override
+    public void onPause(){
+        super.onPause();
+        mp.pause();
+    }
+    @Override
+    public void onStart(){
+        super.onStart();
+        if(!mp.isPlaying()){mp.start();mp.setLooping(true);}
+    }
 
 }
