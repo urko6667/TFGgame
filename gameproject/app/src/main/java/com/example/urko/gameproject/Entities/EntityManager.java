@@ -34,6 +34,10 @@ public class EntityManager {
                 entities.remove(e);
         }
         Collections.sort(entities, new renderSorter());
+
+
+
+
         for(int i = 0; i< entities.size();i++) {
             enemyCollision(player.bounds, entities.get(i).bounds);
             if(enemyCollision(player.bounds, entities.get(i).bounds)){
