@@ -23,6 +23,7 @@ public class World {
     private long lastSpawnTimer, spawnCooldown = 800, spawnTimer = spawnCooldown;
     private EntityManager entityManager;
     private boolean gameover=false;
+    private int[][] blocks;
     private Context context;
     private int tileHeight, tileWidth;
     public World(Handler handler,String path,Context context,int tileWidth, int tileHeight) {
@@ -126,12 +127,22 @@ public class World {
         height =utils.parseInt(tokens[1]);
         spawnX =utils.parseInt(tokens[2]);
         spawnY =utils.parseInt(tokens[3]);
-
+        blocks = new int[width*height][2];
+        int b=0;
         tiles = new int[width][height];
         for(int y = 0;y<height;y++) {
             for(int x =0;x<width;x++) {
                 tiles[x][y] = utils.parseInt(tokens[(x + y *width)+4]);
+                if(getTile(x,y).isSolid()){
+                   blocks[b][0]=x;
+                   blocks[b][1]=y;
+                   b++;
+                }
             }
         }
+        handler.setAStar(width,height,blocks);
+
+
+
     }
 }

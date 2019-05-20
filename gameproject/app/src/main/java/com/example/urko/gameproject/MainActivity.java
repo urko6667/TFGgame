@@ -1,4 +1,4 @@
-package com.example.urko.gameproject;
+ package com.example.urko.gameproject;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
@@ -6,6 +6,9 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
+import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -15,6 +18,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.example.urko.gameproject.IA.AStar;
 import com.example.urko.gameproject.Worlds.World;
 import com.example.urko.gameproject.gfx.Assets;
 import com.example.urko.gameproject.gfx.GameCamera;
@@ -29,6 +33,7 @@ public class MainActivity extends Activity implements Runnable{
     //classes
     private Handler handler;
     private GameCamera gameCamera;
+    private AStar astar;
     private World world;
     private Input input;
 private Canvas canvas, canvas2;
@@ -39,6 +44,7 @@ private ImageView imageView,imageView2, control, hp;
 private int width, height, tileWidth, tileHeight;
 private MediaPlayer mp;
 
+public int tileSizeH, tileSizeW;
 
 
 private double[][] movecontrol;
@@ -46,6 +52,7 @@ private double[][] movecontrol;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Log.d("mytag","comienza todo");
 
         getWindow().getDecorView().setSystemUiVisibility(
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE
@@ -119,9 +126,11 @@ private double[][] movecontrol;
         imageView2.setImageBitmap(bitmap2);
         canvas = new Canvas(bitmap);
         canvas2 = new Canvas(bitmap2);
-        Assets.init(getResources(), width, height);
 
-
+        Drawable drawable = ContextCompat.getDrawable(getApplicationContext(),R.drawable.pokemon);
+        tileSizeH = drawable.getIntrinsicHeight()/4;
+        tileSizeW = drawable.getIntrinsicWidth()/4;
+        Assets.init(getResources(), tileSizeW, tileSizeH);
         control.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -246,7 +255,16 @@ private double[][] movecontrol;
     public Input getInput(){
         return input;
     }
+<<<<<<< HEAD
     public ImageView getHp(){return hp;}
+=======
+    public AStar getAStar(){
+        return astar;
+    }
+    public void setAStar(int width, int height, int [][] blocks){
+        astar= new AStar( width,  height,blocks);
+    }
+>>>>>>> 44c1ac3d5766a696e9e51af3ac8aec347ebb1d94
 
     @Override
     public void onBackPressed(){
