@@ -255,16 +255,14 @@ private double[][] movecontrol;
     public Input getInput(){
         return input;
     }
-<<<<<<< HEAD
     public ImageView getHp(){return hp;}
-=======
+
     public AStar getAStar(){
         return astar;
     }
     public void setAStar(int width, int height, int [][] blocks){
         astar= new AStar( width,  height,blocks);
     }
->>>>>>> 44c1ac3d5766a696e9e51af3ac8aec347ebb1d94
 
     @Override
     public void onBackPressed(){
