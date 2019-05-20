@@ -35,7 +35,7 @@ private Canvas canvas, canvas2;
 private Bitmap bitmap, bitmap2;
 private boolean running=false;
 private Thread thread;
-private ImageView imageView,imageView2, control;
+private ImageView imageView,imageView2, control, hp;
 private int width, height, tileWidth, tileHeight;
 private MediaPlayer mp;
 
@@ -109,6 +109,7 @@ private double[][] movecontrol;
         input= new Input();
 
 
+        hp = (ImageView)findViewById(R.id.lifebar);
         control = (ImageView) findViewById(R.id.move);
         imageView=(ImageView) findViewById(R.id.myimageview);
         imageView2=(ImageView) findViewById(R.id.myimageview2);
@@ -245,6 +246,7 @@ private double[][] movecontrol;
     public Input getInput(){
         return input;
     }
+    public ImageView getHp(){return hp;}
 
     @Override
     public void onBackPressed(){

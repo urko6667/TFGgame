@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.util.Log;
+import android.widget.ImageView;
 
 import com.example.urko.gameproject.Entities.Creatures.Player;
 import com.example.urko.gameproject.Handler;
@@ -11,6 +12,8 @@ import com.example.urko.gameproject.Handler;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import static android.graphics.Rect.intersects;
 
@@ -18,18 +21,21 @@ public class EntityManager {
     private Handler handler;
     private Player player;
     private ArrayList<Entity> entities;
+    private boolean invuln = false;
+
 
     public EntityManager(Handler handler, Player player) {
+
         this.handler=handler;
         this.player=player;
         entities = new ArrayList<Entity>();
         addEntity(player);
-
     }
     public void tick() {
 
         for(int i = 0; i< entities.size();i++) {
             Entity e = entities.get(i);
+            Log.d("mytag","" + player.health);
             e.tick();
             if(!e.isActive() && player.health == 0) {
                 Log.d("mytaga","FUCKING RIP " + e); //Player desaparece
@@ -85,10 +91,38 @@ public class EntityManager {
         }
 
     }
+    public void iFrame(){
+        invuln = true;
+        Log.d("mytagaa","" + handler.getGame().getHp());
+
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                invuln = false;
+            }
+        }, 2000);
+
+        handler.getGame().getHp().getLayoutParams().width -= 100;
+        if(handler.getGame().getHp().getLayoutParams().width <= 0){
+            //Es 1 porque si se deja a 0 se le va la pinza
+            handler.getGame().getHp().getLayoutParams().width = 1;
+        }
+        //Es necesario esto para refrescar la UI
+            handler.getGame().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    handler.getGame().getHp().requestLayout();
+                }
+            });
+
+    }
     public boolean enemyCollision(Rect playerrect, Rect enemyrect){
 
-        if(intersects(playerrect,enemyrect)){
+        if(intersects(playerrect,enemyrect) && !invuln){
             Log.d("mytaga","Enemigo tocado");
+            player.health--;
+            iFrame();
+/*
             Log.d("mytaga","player X" + playerrect.exactCenterX());
             Log.d("mytaga","player Y" + playerrect.exactCenterY());
             Log.d("mytaga","enemy X" + enemyrect.exactCenterX());
@@ -109,13 +143,10 @@ public class EntityManager {
                 if (wy > -hx) Log.d("mytaga","RIGHT");
                 else Log.d("mytaga","BOTTOM");
             }
-
-
-            //player.health -=
+*/
             return true;
         }
         else{
-
             return false;
         }
     }

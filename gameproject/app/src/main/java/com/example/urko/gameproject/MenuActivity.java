@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 
 public class MenuActivity extends AppCompatActivity {
@@ -41,6 +42,12 @@ public class MenuActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent empezarjuego = new Intent(getApplicationContext(),MainActivity.class);
                 startActivity(empezarjuego);
+            }
+        });
+        btncontinuegame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MenuActivity.this, "No se ha encontrado una partida guardada", Toast.LENGTH_SHORT).show();
             }
         });
 //Ocultar barra de navegacion y estado al crear y al pasar un rato despues de haber deslizado

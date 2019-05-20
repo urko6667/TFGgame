@@ -33,7 +33,7 @@ public class Player extends Creature{
         marginLeft=tileWidth/10;
         marginRight=tileWidth/10;
         marginTop=tileHeight/10;
-        health=1;
+        health=3;
         speed=tileWidth/5;
         this.tileHeight=tileHeight;
         this.tileWidth=tileWidth;
