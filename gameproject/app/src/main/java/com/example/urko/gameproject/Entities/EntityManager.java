@@ -8,6 +8,7 @@ import android.widget.ImageView;
 
 import com.example.urko.gameproject.Entities.Creatures.Player;
 import com.example.urko.gameproject.Handler;
+import com.example.urko.gameproject.R;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -102,7 +103,13 @@ public class EntityManager {
             }
         }, 2000);
 
-        handler.getGame().getHp().getLayoutParams().width -= 100;
+        //handler.getGame().getHp().getLayoutParams().width -= 100;
+
+
+
+
+
+
         if(handler.getGame().getHp().getLayoutParams().width <= 0){
             //Es 1 porque si se deja a 0 se le va la pinza
             handler.getGame().getHp().getLayoutParams().width = 1;
@@ -111,6 +118,22 @@ public class EntityManager {
             handler.getGame().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
+                    handler.getGame().getHp().getLayoutParams().width -= 100;
+                    switch (player.health){
+                        /*case 3:
+                            handler.getGame().getHp().setImageResource(R.drawable.healthbar3);
+                            break;*/
+                        case 2:
+                            handler.getGame().getHp().setImageResource(R.drawable.healthbar2);
+                            break;
+                        case 1:
+                            handler.getGame().getHp().setImageResource(R.drawable.healthbar1);
+                            break;
+                        case 0:
+                            handler.getGame().getHp().getLayoutParams().width = 1;
+                            break;
+
+                    }
                     handler.getGame().getHp().requestLayout();
                 }
             });
