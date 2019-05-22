@@ -52,8 +52,10 @@ public abstract class Entity {
         }*/
         return false;
     }
- public Rect getCollisionBounds(){
-        return bounds;
+ public Rect getCollisionBounds(float xOffset, float yOffset){
+     return new Rect((int)(x+xOffset),(int) (y+ yOffset), (int)x+width, (int)x+height);
+        //return bounds;
+
  }
     /*public Rectangle getCollisionBounds(float xOffset, float yOffset) {
         //return new Rectangle((int)(x+bounds.x+xOffset),(int) (y+bounds.y + yOffset), bounds.width, bounds.height);

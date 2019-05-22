@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.util.Log;
 
 import com.example.urko.gameproject.Entities.Entity;
@@ -22,6 +23,7 @@ public class Player extends Creature{
     private boolean movement=true;
     private int tileWidth, tileHeight;
     public static int marginTop, marginLeft, marginRight, marginBottom;
+    private Rect ar, cb;
     private Paint paint;
     public Player(Handler handler, float x, float y, int tileWidth, int tileHeight) {
         super(handler, x, y, tileWidth, tileHeight, tileHeight/10, tileWidth/10, tileHeight/10, tileWidth/10);
@@ -61,7 +63,7 @@ public class Player extends Creature{
         bounds.set((int)x+marginLeft,(int)y+marginTop,(int)x+tileWidth-marginRight,(int)y+tileHeight-marginBottom);
         setBounds(bounds);
         handler.getGameCamera().centerOnEntity(this);
-        //checkAttacks();
+        checkAttacks();
     }
 
     public void checkAttacks() {
@@ -69,12 +71,50 @@ public class Player extends Creature{
         lastAttackTimer = System.currentTimeMillis();
         if(attackTimer < attackCooldown)
             return;
+        cb= new Rect();
+        cb=getCollisionBounds(0,0);
+        Rect ar = new Rect();
+        int arSize = 32;
        /* Rectangle cb = getCollisionBounds(0, 0);
         Rectangle ar = new Rectangle();
         int arSize = 32;
         ar.width = arSize;
         ar.height = arSize;*/
 
+        if(handler.getInput().attackDir==0){
+            ar = new Rect((int)x,(int)y-height/3,(int)x+width,(int)y+height/3);
+           /* ar.x = cb.x + cb.width / 2 - arSize / 2;
+            ar.y = cb.y - arSize;*/
+            //ar.x-=handler.getGameCamera().getxOffset();
+            //ar.y-=handler.getGameCamera().getyOffset();
+            attackAnim(x-handler.getGameCamera().getxOffset(),y-handler.getGameCamera().getyOffset(),1);
+        }
+        if(handler.getInput().attackDir==1){
+            ar = new Rect((int)x+width,(int)y+height/3,(int)x+width*2,(int)y+height/3*2);
+           /* ar.x = cb.x + cb.width / 2 - arSize / 2;
+            ar.y = cb.y - arSize;*/
+            //ar.x-=handler.getGameCamera().getxOffset();
+            //ar.y-=handler.getGameCamera().getyOffset();
+            attackAnim(x+width-handler.getGameCamera().getxOffset(),y+height/3-handler.getGameCamera().getyOffset(),4);
+        }
+        if(handler.getInput().attackDir==2){
+            ar = new Rect((int)x,(int)y+height,(int)x+width,(int)y+height/3*2);
+           /* ar.x = cb.x + cb.width / 2 - arSize / 2;
+            ar.y = cb.y - arSize;*/
+            //ar.x-=handler.getGameCamera().getxOffset();
+            //ar.y-=handler.getGameCamera().getyOffset();
+            attackAnim(x-handler.getGameCamera().getxOffset(),y+height-handler.getGameCamera().getyOffset(),2);
+        }
+        if(handler.getInput().attackDir==4){
+            ar = new Rect((int)x-width,(int)y+height/3,(int)x,(int)y+height/3*2);
+           /* ar.x = cb.x + cb.width / 2 - arSize / 2;
+            ar.y = cb.y - arSize;*/
+            //ar.x-=handler.getGameCamera().getxOffset();
+            //ar.y-=handler.getGameCamera().getyOffset();
+            attackAnim(x-width-handler.getGameCamera().getxOffset(),y+height/3-handler.getGameCamera().getyOffset(),3);
+        }else{
+            return;
+        }
         /*if(handler.getKeyManager().aUp){
             ar.x = cb.x + cb.width / 2 - arSize / 2;
             ar.y = cb.y - arSize;
@@ -116,7 +156,7 @@ public class Player extends Creature{
     }
     public void attackAnim(float x, float y,int ori){
         movement=false;
-       // handler.getWorld().getEntityManager().addEntity(new Sword(handler,(int)x ,(int)y,ori));
+        handler.getWorld().getEntityManager().addEntity(new Sword(handler,(int)x ,(int)y,ori));
 
     }
 
