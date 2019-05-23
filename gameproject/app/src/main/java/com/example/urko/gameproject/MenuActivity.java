@@ -34,7 +34,7 @@ public class MenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mp.stop();
-                System.exit(0);
+                finishAndRemoveTask();
             }
         });
         btnnewgame.setOnClickListener(new View.OnClickListener() {

@@ -44,9 +44,10 @@ public class EntityManager {
             }
         }
         Collections.sort(entities, new renderSorter());
-        for(int i = 1; i< entities.size();i++) {
-
+        for(int i = 0; i< entities.size();i++) {
+        if(player.bounds != entities.get(i).bounds)
            enemyCollision(player.bounds, entities.get(i).bounds);
+
             //if(enemyCollision(player.bounds, entities.get(i).bounds)){}
         }
     }
@@ -141,7 +142,7 @@ public class EntityManager {
     }
     public boolean enemyCollision(Rect playerrect, Rect enemyrect){
 
-        if(intersects(playerrect,enemyrect) && !invuln){
+        if(playerrect.intersect(enemyrect) && !invuln){
             Log.d("mytaga","Enemigo tocado");
             player.health--;
             iFrame();
