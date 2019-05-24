@@ -160,7 +160,7 @@ public class Pokemon extends Creature{
         for (Entity e : handler.getWorld().getEntityManager().getEntities()) {
             if (e.equals(this))
                 continue;
-            if (intersects(e.getCollisionBounds(), bounds)) {
+            if (intersects(e.getCollisionBounds(0,0), bounds)) {
                 //handler.getWorld().setGameover();
                 //e.hurt(1);
                 //hurt(1);
@@ -188,7 +188,7 @@ public class Pokemon extends Creature{
         for (Entity e : handler.getWorld().getEntityManager().getEntities()) {
             if (e.equals(this))
                 continue;
-            if (intersects(e.getCollisionBounds(), bounds)) {
+            if (intersects(e.getCollisionBounds(0,0), bounds)) {
                 //handler.getWorld().setGameover();
                 //e.hurt(1);
                 //hurt(1);

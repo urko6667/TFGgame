@@ -20,6 +20,7 @@ import android.widget.ImageView;
 
 import com.example.urko.gameproject.IA.AStar;
 import com.example.urko.gameproject.Worlds.World;
+import com.example.urko.gameproject.Worlds.World01;
 import com.example.urko.gameproject.gfx.Assets;
 import com.example.urko.gameproject.gfx.GameCamera;
 import com.example.urko.gameproject.input.Input;
@@ -30,17 +31,23 @@ import java.io.InputStream;
 
 public class MainActivity extends Activity implements Runnable{
     private String world1 = "file:///android_asset/" + "world1.txt";
+
+    private String world01 = "worlds/" + "world01.txt";
+    private String world02 = "file:///android_asset/worlds/" + "world02.txt";
+    private String world03 = "file:///android_asset/worlds/" + "world03.txt";
+
     //classes
     private Handler handler;
     private GameCamera gameCamera;
     private AStar astar;
     private World world;
+    private World01 world01C;
     private Input input;
 private Canvas canvas, canvas2;
 private Bitmap bitmap, bitmap2;
 private boolean running=false;
 private Thread thread;
-private ImageView imageView,imageView2, control, hp;
+private ImageView imageView,imageView2, control, attackB;
 private int width, height, tileWidth, tileHeight;
 private MediaPlayer mp;
 
@@ -116,8 +123,8 @@ private double[][] movecontrol;
         input= new Input();
 
 
-        hp = (ImageView)findViewById(R.id.lifebar);
         control = (ImageView) findViewById(R.id.move);
+        attackB = (ImageView) findViewById(R.id.attackB);
         imageView=(ImageView) findViewById(R.id.myimageview);
         imageView2=(ImageView) findViewById(R.id.myimageview2);
         bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
@@ -127,10 +134,18 @@ private double[][] movecontrol;
         canvas = new Canvas(bitmap);
         canvas2 = new Canvas(bitmap2);
 
-        Drawable drawable = ContextCompat.getDrawable(getApplicationContext(),R.drawable.pokemon);
-        tileSizeH = drawable.getIntrinsicHeight()/4;
-        tileSizeW = drawable.getIntrinsicWidth()/4;
+        Drawable drawable = ContextCompat.getDrawable(getApplicationContext(),R.drawable.creatures);
+        tileSizeH = drawable.getIntrinsicHeight()/5;
+        tileSizeW = drawable.getIntrinsicWidth()/6;
         Assets.init(getResources(), tileSizeW, tileSizeH);
+        attackB.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                getInput().setAttack(true);
+                Log.d("boton","ataca");
+                return true;
+            }
+        });
         control.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -181,7 +196,9 @@ private double[][] movecontrol;
     }
     public void tick(){
         input.tick();
+        if(world!=null)
         world.tick();
+       // world01C.tick();
     }
     public void render(){
         //canvas.drawColor(Color.BLACK);
@@ -194,7 +211,9 @@ private double[][] movecontrol;
 
         canvas.drawColor(Color.TRANSPARENT,PorterDuff.Mode.CLEAR);
         canvas2.drawColor(Color.TRANSPARENT,PorterDuff.Mode.CLEAR);
-        world.render(canvas,canvas2);
+        if(world!=null)
+            world.render(canvas,canvas2);
+//        world01C.render(canvas,canvas2);
 
         runOnUiThread(new Runnable() {
             @Override
@@ -208,7 +227,12 @@ private double[][] movecontrol;
     }
     public synchronized void start(){
         Log.d("mytag","start");
-        world = new World(handler, world1, this, tileWidth, tileHeight);
+        //world = new World(handler, world1, this, tileWidth, tileHeight);
+
+        world = new World(handler, world01, this, tileWidth, tileHeight, 1);
+       // world = new World(handler, world02, this, tileWidth, tileHeight);
+        //world = new World(handler, world03, this, tileWidth, tileHeight);
+
         handler.setWorld(world);
         if(running)
             return;
@@ -255,8 +279,6 @@ private double[][] movecontrol;
     public Input getInput(){
         return input;
     }
-    public ImageView getHp(){return hp;}
-
     public AStar getAStar(){
         return astar;
     }

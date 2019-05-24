@@ -15,7 +15,8 @@ public class utils extends Activity {
     public  String loadFileAsString(String path, Context context) {
         StringBuilder builder = new StringBuilder();
         try {
-            BufferedReader br = new BufferedReader(new InputStreamReader(context.getAssets().open("worlds/world1.txt"), "UTF-8"));
+            //BufferedReader br = new BufferedReader(new InputStreamReader(context.getAssets().open("worlds/world1.txt"), "UTF-8"));
+            BufferedReader br = new BufferedReader(new InputStreamReader(context.getAssets().open(path), "UTF-8"));
             String line;
             while((line= br.readLine())!=null)
                 builder.append(line+"\n");

@@ -12,11 +12,11 @@ import com.example.urko.gameproject.Handler;
 import com.example.urko.gameproject.Tiles.Tile;
 import com.example.urko.gameproject.Utils.utils;
 
-public class World {
+public class World01 {
 
     private Handler handler;
     private int width, height;
-    private int spawnX, spawnY, lvl;
+    private int spawnX, spawnY;
     private int[][] tiles;
     private int puntosint=0;
     private String puntostring="0",file;
@@ -26,31 +26,19 @@ public class World {
     private int[][] blocks;
     private Context context;
     private int tileHeight, tileWidth;
-    public World(Handler handler,String path,Context context,int tileWidth, int tileHeight,int lvl) {
+    public World01(Handler handler,String path,Context context,int tileWidth, int tileHeight) {
         this.handler=handler;
-        this.lvl=lvl;
         loadWorld(path,context);
         this.context=context;
         this.tileHeight=tileHeight;
         this.tileWidth=tileWidth;
-        if(lvl==1){
-            startLvl1();
-        }else if(lvl==2){
-            startLvl1();
-        }else if(lvl==3){
-            startLvl1();
-        }else{
-            entityManager = new EntityManager(handler, new Player(handler, 32,32,this.tileWidth,this.tileHeight));
-        }
-
-
-        //entityManager = new EntityManager(handler, new Player(handler, 32,32,this.tileWidth,this.tileHeight));
-       // entityManager.getPlayer().setX(tileWidth);
-        //entityManager.getPlayer().setY(tileHeight);
+        entityManager = new EntityManager(handler, new Player(handler, tileWidth,8*tileHeight,this.tileWidth,this.tileHeight));
+       // entityManager.getPlayer().setX(32);
+        //entityManager.getPlayer().setY(256);
         //entityManager.addEntity(new Pokeball(handler,handler.getGame().getTileWidth()*2,handler.getGame().getTileHeight()*3));
-       // entityManager.addEntity(new Pokeball(handler,handler.getGame().getTileWidth()*3,handler.getGame().getTileHeight()*2));
+        // entityManager.addEntity(new Pokeball(handler,handler.getGame().getTileWidth()*3,handler.getGame().getTileHeight()*2));
         //entityManager.addEntity(new Pokemon(handler,5*tileWidth,5*tileHeight,tileWidth,tileHeight));
-       // entityManager.addEntity(new Pokemon(handler,tileWidth*4,tileHeight*4,tileWidth,tileHeight));
+        //entityManager.addEntity(new Pokemon(handler,tileWidth*4,tileHeight*4,tileWidth,tileHeight));
 
     }
     public EntityManager getEntityManager() {
@@ -132,7 +120,7 @@ public class World {
         return height;
     }
     private  void loadWorld(String path,Context context) {
-         file = new utils().loadFileAsString(path,context);
+        file = new utils().loadFileAsString(path,context);
         String[] tokens = file.split("\\s+");
         Log.d("mytag", ""+tokens.length);
         width =utils.parseInt(tokens[0]);
@@ -147,9 +135,9 @@ public class World {
                 tiles[x][y] = utils.parseInt(tokens[(x + y *width)+4]);
                 System.out.println(tiles[x][y]);
                 if(getTile(x,y).isSolid()){
-                   blocks[b][0]=x;
-                   blocks[b][1]=y;
-                   b++;
+                    blocks[b][0]=x;
+                    blocks[b][1]=y;
+                    b++;
                 }
             }
         }
@@ -158,17 +146,4 @@ public class World {
 
 
     }
-
-    public void startLvl1(){
-        entityManager = new EntityManager(handler, new Player(handler, spawnX*tileWidth,spawnY*tileHeight,this.tileWidth,this.tileHeight));
-
-    }
-    public void startLvl2(){
-
-    }
-    public void startLvl3(){
-
-    }
-
-
 }
